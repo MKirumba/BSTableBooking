@@ -9,14 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BSTableBookingAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BSTableBooking") ?? throw new InvalidOperationException("Connection string 'RetailWebSystemContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BSTableBooking") ?? throw new InvalidOperationException("Connection string 'BSTableBookingContext' not found.")));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddEntityFrameworkStores<BSTableBookingAppDbContext>()
        .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IBookingInfoservices, BookingInfoServices>();
-builder.Services.AddScoped<IBookedTableService, BookedTableService>();
+builder.Services.AddScoped<ITableAreaService, TableAreaService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 

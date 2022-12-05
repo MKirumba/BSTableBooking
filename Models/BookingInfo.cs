@@ -19,7 +19,7 @@ namespace BSTableBooking.Models
         public string Image { get; set; }
         public int CategoryID { get; set; }
         
-        public BookedTable Category { get; set; }
+        public TableArea Category { get; set; }
         public AvailTables Stock { get; set; }
         public List<Booking> Order { get; set; } = new List<Booking>();
         

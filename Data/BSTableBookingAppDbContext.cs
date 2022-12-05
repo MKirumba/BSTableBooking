@@ -13,13 +13,13 @@ namespace BSTableBooking.Data
             
         }
        
-        public DbSet<BSTableBooking.Models.BookingInfo> Product { get; set; }= default!;
-        public DbSet<BSTableBooking.Models.BookedTable> Category { get; set; } = default!;
-        public DbSet<BSTableBooking.Models.Booking> Order { get; set; } = default!;
-        public DbSet<BSTableBooking.Models.AvailTables> Stock { get; set; } = default!;
+        public DbSet<BSTableBooking.Models.BookingInfo> BookingInfo { get; set; }= default!;
+        public DbSet<BSTableBooking.Models.TableArea> TableArea{ get; set; } = default!;
+        public DbSet<BSTableBooking.Models.Booking> Booking { get; set; } = default!;
+        public DbSet<BSTableBooking.Models.AvailTables> AvailTables { get; set; } = default!;
 
        
-       
+
 
     }
 }

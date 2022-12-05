@@ -12,12 +12,12 @@ namespace BSTableBooking.Services
         }
         public IEnumerable<BookingInfo> GetAllProducts()
         {
-            return (Db.Product.Select(u => u).ToList());
+            return (Db.BookingInfo.Select(u => u).ToList());
         }
         public void CreateProduct(BookingInfo P)
         {
           
-                Db.Product.Add(P);
+                Db.BookingInfo.Add(P);
                 Db.SaveChanges();
         }
     }

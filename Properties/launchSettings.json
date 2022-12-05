@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "RetailApp": {
+    "BSTableBooking": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

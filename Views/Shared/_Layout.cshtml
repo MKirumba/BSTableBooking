@@ -6,8 +6,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RetailApp</title>
-    <link rel="stylesheet" href="~/css/bootstrapTheme.css" />
+    <title>@ViewData["Title"] - Bean Scene Book a Table!!</title>
+    <link rel="stylesheet" href="~/css/BootstrapTheme.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RetailApp.styles.css" asp-append-version="true" />
 </head>
@@ -24,10 +24,10 @@
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="Index">Product</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Product" asp-action="ProductList">Order</a>
+                <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="ProductList">Order</a>
             </li>
             @if (User.IsInRole("admin"))
             {

@@ -10,9 +10,9 @@ namespace BSTableBooking.Controllers
         BSTableBookingAppDbContext DB;
         IBookingInfoservices IPservices;
         IFileService IFService;
-        IBookedTableService ICService;
+        ITableAreaService ICService;
 
-        public BookingController(IFileService _IFService, BSTableBookingAppDbContext _Db, IBookedTableService _Categoryservices, IBookingInfoservices _IPservices)
+        public BookingController(IFileService _IFService, BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
         {
             ICService = _Categoryservices;
             IPservices = _IPservices;
@@ -30,8 +30,8 @@ namespace BSTableBooking.Controllers
                 return NotFound();
             }
 
-            var productFormDb = DB.Product.Find(id);
-            var stockQty = DB.Stock.Find(id);
+            var productFormDb = DB.BookingInfo.Find(id);
+            var stockQty = DB.AvailTables.Find(id);
             productFormDb.Qty = stockQty.Qty;
 
             if (productFormDb == null)
@@ -49,11 +49,11 @@ namespace BSTableBooking.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrder(Booking Ord)
         {
-            var prod = DB.Product.Find(Ord.ProductID);
+            var prod = DB.BookingInfo.Find(Ord.ProductID);
             Ord.TotalPrice = Ord.Qty * prod.UnitPrice;
         
 
-            var pStock = DB.Stock.Find(Ord.ProductID);
+            var pStock = DB.AvailTables.Find(Ord.ProductID);
             pStock.Qty = pStock.Qty - Ord.Qty;
 
             //var stock = new AvailTables
@@ -62,9 +62,9 @@ namespace BSTableBooking.Controllers
             //    Qty = pStock.Qty- Ord.Qty
             //};
 
-            DB.Order.Add(Ord);
+            DB.Booking.Add(Ord);
             DB.SaveChanges();
-            DB.Stock.Update(pStock);
+            DB.AvailTables.Update(pStock);
             DB.SaveChanges();
             TempData["success"] = "Booking Submitted Successfully, your order Number is " + Ord.OrderID+" Booking details have been sent to your email";
             return RedirectToAction("ProductList","BookingInfo");

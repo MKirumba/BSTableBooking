@@ -14,9 +14,9 @@ namespace BSTableBooking.Controllers
         BSTableBookingAppDbContext DB;
         IBookingInfoservices IPservices;
         IFileService IFService;
-        IBookedTableService ICService;
+        ITableAreaService ICService;
 
-        public BookingInfoController(IFileService _IFService, BSTableBookingAppDbContext _Db, IBookedTableService _Categoryservices, IBookingInfoservices _IPservices)
+        public BookingInfoController(IFileService _IFService, BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
         {
             ICService= _Categoryservices;
             IPservices = _IPservices;
@@ -90,9 +90,9 @@ namespace BSTableBooking.Controllers
                 ProductId = Pobj.ProuctId,
                 Qty = 0
             };
-            DB.Stock.Add(stock);
+            DB.AvailTables.Add(stock);
             DB.SaveChanges();
-            TempData["success"] = "BookingInfo Created Successfully";
+            TempData["success"] = "Booking Created Successfully";
             return RedirectToAction("Index");
             
 
@@ -107,11 +107,13 @@ namespace BSTableBooking.Controllers
                 return NotFound();
             }
             
-            var CategoryFormDb = DB.Product.Find(id);
+            var CategoryFormDb = DB.BookingInfo.Find(id);
+            var tempimage = CategoryFormDb.Image;
             if (CategoryFormDb==null)
             {
                 return NotFound();
             }
+           CategoryFormDb.CategoryList = ICService.List().Select(a => new SelectListItem { Text = a.CategoryName, Value = a.CategoryId.ToString() });
             return View(CategoryFormDb);
         }
 
@@ -123,16 +125,34 @@ namespace BSTableBooking.Controllers
 
         public IActionResult Edit(BookingInfo Pobj)
         {
-            //var x = Pobj.ProuctId;
+            Pobj.CategoryID = Pobj.Categories;
 
-            if (ModelState.IsValid)
+
+            if (Pobj.ImageFile != null)
             {
-                DB.Product.Update(Pobj);
+                var fileReult = this.IFService.SaveImage(Pobj.ImageFile);
+                if (fileReult.Item1 == 0)
+                {
+                    TempData["msg"] = "File could not saved";
+                    return View(Pobj);
+                }
+                var imageName = fileReult.Item2;
+                Pobj.Image = imageName;
+            }
+
+            
+
+            //if (ModelState.IsValid)
+            {
+                DB.BookingInfo.Update(Pobj);
                 DB.SaveChanges();
-                TempData["success"] = "BookingInfo Updated Successfully";
+
+
+
+                TempData["success"] = "Booking Updated Successfully";
                 return RedirectToAction("Index");
             }
-            return View(Pobj);
+            //return View(Pobj);
         }
 
         // display Delete view
@@ -145,7 +165,7 @@ namespace BSTableBooking.Controllers
                 return NotFound();
             }
 
-            var CategoryFormDb = DB.Product.Find(id);
+            var CategoryFormDb = DB.BookingInfo.Find(id);
             if (CategoryFormDb == null)
             {
                 return NotFound();
@@ -161,12 +181,12 @@ namespace BSTableBooking.Controllers
         public IActionResult DeletePost(int? Id)
         {
 
-            BookingInfo product = DB.Product.FirstOrDefault(s => s.ProuctId == Id);
+            BookingInfo product = DB.BookingInfo.FirstOrDefault(s => s.ProuctId == Id);
             if (product !=null)
             {
                 DB.Remove(product);
                 DB.SaveChanges();
-                TempData["success"] = "BookingInfo Deleted Successfully";
+                TempData["success"] = "Booking Deleted Successfully";
                 return RedirectToAction("Index");
             }
             return View();

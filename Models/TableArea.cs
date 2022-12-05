@@ -2,7 +2,7 @@
 
 namespace BSTableBooking.Models
 {
-    public class BookedTable
+    public class TableArea
     {
         [Key]
         public int CategoryId { get; set; }

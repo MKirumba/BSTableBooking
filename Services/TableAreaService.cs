@@ -2,19 +2,19 @@
 using BSTableBooking.Models;
 namespace BSTableBooking.Services
 {
-    public class BookedTableService : IBookedTableService
+    public class TableAreaService : ITableAreaService
 
     {
         BSTableBookingAppDbContext Dbx;
-        public BookedTableService(BSTableBookingAppDbContext _Dbx)
+        public TableAreaService(BSTableBookingAppDbContext _Dbx)
         {
             this.Dbx = _Dbx;
         }
-        public bool Add(BookedTable model)
+        public bool Add(TableArea model)
         {
             try
             {
-                Dbx.Category.Add(model);
+                Dbx.TableArea.Add(model);
                 Dbx.SaveChanges();
                 return true;
             }
@@ -32,7 +32,7 @@ namespace BSTableBooking.Services
                 var data = this.GetById(id);
                 if (data == null)
                     return false;
-                Dbx.Category.Remove(data);
+                Dbx.TableArea.Remove(data);
                 Dbx.SaveChanges();
                 return true;
             }
@@ -42,22 +42,22 @@ namespace BSTableBooking.Services
             }
         }
 
-        public BookedTable GetById(int id)
+        public TableArea GetById(int id)
         {
-            return Dbx.Category.Find(id);
+            return Dbx.TableArea.Find(id);
         }
 
-        public IQueryable<BookedTable> List()
+        public IQueryable<TableArea> List()
         {
-            var data = Dbx.Category.AsQueryable();
+            var data = Dbx.TableArea.AsQueryable();
             return data;
         }
 
-        public bool Update(BookedTable model)
+        public bool Update(TableArea model)
         {
             try
             {
-                Dbx.Category.Update(model);
+                Dbx.TableArea.Update(model);
                 Dbx.SaveChanges();
                 return true;
             }
