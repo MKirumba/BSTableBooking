@@ -5,29 +5,25 @@
     var product = ViewData["BookingInfo"]
     as BSTableBooking.Models.BookingInfo;
 }
-<h1>Session Details</h1>
+<h1>Book a Table</h1>
 <form id="ProductDetails" asp-action="CreateOrder">
     <div class="border p-3 mt-4">
         <input asp-for="ProductID" value=@product.ProuctId hidden class="form-control" />
         <div class="row pb-2">
-            <h2 class="text-primary">Product Details</h2>
+            <h2 class="text-primary">Session Details</h2>
         </div>
         <div class="mb-2">
             <table style="font-family:Arial">
                 <tr>
-                    <td>Item Name</td>
+                    <td>Session Name</td>
                     <td>@product.ProductName</td>
                 </tr>
                 <tr>
-                    <td>Item Details</td>
+                    <td>Session Details</td>
                     <td>@product.ProductDescription</td>
                 </tr>
                 <tr>
-                    <td>Unit Price:</td>
-                    <td>@product.UnitPrice</td>
-                </tr>
-                <tr>
-                    <td>Available Item </td>
+                    <td>Seats Available</td>
                     
                     <td>@product.Qty</td>    
                 </tr>
@@ -38,13 +34,13 @@
         <h2 class="text-primary">Order Details</h2>
     </div>
         <div>
-            <label>Order Details</label>
+            <label>Booking Details</label>
             <input asp-for="OrderDescription" class="form-control" />
             <span asp-validation-for="OrderDescription" class="text-danger"></span>
         </div>
        
         <div class="mb3">
-            <label>Quantity</label>
+            <label>Number of people</label>
             <input asp-for="Qty" class="form-control"/>
             <span asp-validation-for="Qty" class="text-danger"></span>
          </div>

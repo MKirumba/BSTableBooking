@@ -5,6 +5,7 @@
 }
 
 
+
 <div class="container p-3">
     <div>
         <h2 class="text-primary">Sessions</h2>
@@ -26,6 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProductDescription)
             </th>
+            <th>
+                @Html.DisplayNameFor(model =>model.Qty)
+            </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.SessionStartTime)
@@ -34,10 +38,7 @@
                 @Html.DisplayNameFor(model => model.SessionEndTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingSession)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryID)
+                @Html.DisplayNameFor(model =>model.Category.CategoryName)
             </th>
 
 
@@ -54,6 +55,9 @@
                 @Html.DisplayFor(modelItem => item.ProductDescription)
             </td>
                 <td width="20%">
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td width="20%">
                     @Html.DisplayFor(modelItem => item.SessionStartTime)
                 </td>
                 <td width="20%">
@@ -61,9 +65,8 @@
                 </td>
                 <td width="20%">
                     @Html.DisplayFor(modelItem => item.BookingSession)
-                </td>
                 <td width="20%">
-                    @Html.DisplayFor(modelItem => item.CategoryID)
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
                 </td>
 
 

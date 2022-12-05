@@ -1,4 +1,7 @@
 ﻿@model BookingInfo
+{
+
+}
 
 <h1>Create Session</h1>
 <form method="post">
@@ -24,6 +27,16 @@
             <span asp-validation-for="SessionStartTime" class="text-danger"></span>
 
         </div>
+        <br />
+
+        <div class="mb3">
+
+            <label>Available Seats</label>
+            <input asp-for="Qty" class="form-control" />
+            <span asp-validation-for="Qty" class="text-danger"></span>
+
+        </div>
+        <br />
         <div class="mb3">
 
             <label>Session End Date</label>

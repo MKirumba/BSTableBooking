@@ -33,6 +33,9 @@ namespace BSTableBooking.Models
         [NotMapped]
         public int? Qty { get; set; }
 
+        //[NotMapped]
+        //public int? Qty { get; set; }
+
 
 
         // MK Add
@@ -47,7 +50,7 @@ namespace BSTableBooking.Models
         [DisplayName("Booking Session")]
         public string? BookingSession { get; set; }
 
-
+        
 
     }
 }

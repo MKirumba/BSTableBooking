@@ -26,11 +26,13 @@ namespace BSTableBooking.Controllers
         
         public IActionResult Index()
         {
+
           return View(IPservices.GetAllProducts());
         }
 
         public IActionResult ProductList()
         {
+
             return View(IPservices.GetAllProducts());
         }
 
