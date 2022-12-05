@@ -13,15 +13,14 @@ namespace BSTableBooking.Controllers
     {
         BSTableBookingAppDbContext DB;
         IBookingInfoservices IPservices;
-        IFileService IFService;
         ITableAreaService ICService;
 
-        public BookingInfoController(IFileService _IFService, BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
+        public BookingInfoController( BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
         {
             ICService= _Categoryservices;
             IPservices = _IPservices;
             DB = _Db;
-            IFService = _IFService;
+
         }
 
         
@@ -70,19 +69,6 @@ namespace BSTableBooking.Controllers
         {
             
             Pobj.CategoryID = Pobj.Categories;
-            
-            if (Pobj.ImageFile != null)
-            {
-                var fileReult = this.IFService.SaveImage(Pobj.ImageFile);
-                if (fileReult.Item1 == 0)
-                {
-                    TempData["msg"] = "File could not saved";
-                    return View(Pobj);
-                }
-                var imageName = fileReult.Item2;
-                Pobj.Image = imageName;
-            }
-
          
             IPservices.CreateProduct(Pobj);
             var stock = new AvailTables
@@ -90,6 +76,8 @@ namespace BSTableBooking.Controllers
                 ProductId = Pobj.ProuctId,
                 Qty = 0
             };
+            
+
             DB.AvailTables.Add(stock);
             DB.SaveChanges();
             TempData["success"] = "Booking Created Successfully";
@@ -108,7 +96,7 @@ namespace BSTableBooking.Controllers
             }
             
             var CategoryFormDb = DB.BookingInfo.Find(id);
-            var tempimage = CategoryFormDb.Image;
+ 
             if (CategoryFormDb==null)
             {
                 return NotFound();
@@ -127,19 +115,6 @@ namespace BSTableBooking.Controllers
         {
             Pobj.CategoryID = Pobj.Categories;
 
-
-            if (Pobj.ImageFile != null)
-            {
-                var fileReult = this.IFService.SaveImage(Pobj.ImageFile);
-                if (fileReult.Item1 == 0)
-                {
-                    TempData["msg"] = "File could not saved";
-                    return View(Pobj);
-                }
-                var imageName = fileReult.Item2;
-                Pobj.Image = imageName;
-            }
-
             
 
             //if (ModelState.IsValid)
@@ -149,7 +124,7 @@ namespace BSTableBooking.Controllers
 
 
 
-                TempData["success"] = "Booking Updated Successfully";
+                TempData["success"] = "Session Updated Successfully";
                 return RedirectToAction("Index");
             }
             //return View(Pobj);

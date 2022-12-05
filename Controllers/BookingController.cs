@@ -9,15 +9,14 @@ namespace BSTableBooking.Controllers
     {
         BSTableBookingAppDbContext DB;
         IBookingInfoservices IPservices;
-        IFileService IFService;
         ITableAreaService ICService;
 
-        public BookingController(IFileService _IFService, BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
+        public BookingController( BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
         {
             ICService = _Categoryservices;
             IPservices = _IPservices;
             DB = _Db;
-            IFService = _IFService;
+
         }
         public IActionResult Index()
         {
@@ -49,8 +48,8 @@ namespace BSTableBooking.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrder(Booking Ord)
         {
-            var prod = DB.BookingInfo.Find(Ord.ProductID);
-            Ord.TotalPrice = Ord.Qty * prod.UnitPrice;
+            //var prod = DB.BookingInfo.Find(Ord.ProductID);
+            //Ord.TotalPrice = Ord.Qty * prod.UnitPrice;
         
 
             var pStock = DB.AvailTables.Find(Ord.ProductID);

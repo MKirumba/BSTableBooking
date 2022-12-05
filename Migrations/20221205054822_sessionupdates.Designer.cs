@@ -4,6 +4,7 @@ using BSTableBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    partial class BSTableBookingAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205054822_sessionupdates")]
+    partial class sessionupdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,6 +134,9 @@ namespace BSTableBooking.Migrations
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
                     b.HasKey("OrderID");
 
                     b.HasIndex("ProductID");
@@ -152,6 +157,10 @@ namespace BSTableBooking.Migrations
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductDescription")
                         .IsRequired()

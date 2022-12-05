@@ -15,8 +15,7 @@ namespace BSTableBooking.Models
         public string OrderDescription { get; set; }
         [Required]
         public int Qty { get; set; }
-        [Required]
-        public double TotalPrice { get; set; }
+
         public BookingInfo Product { get; set; }
     }
 }

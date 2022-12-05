@@ -5,8 +5,8 @@
     var product = ViewData["BookingInfo"]
     as BSTableBooking.Models.BookingInfo;
 }
-<h1>Product Order</h1>
-<form id="ProductDetails" asp-action="CreateOrder" oninput="Price.value=parseInt(a.value)*parseInt(@product.UnitPrice)">
+<h1>Session Details</h1>
+<form id="ProductDetails" asp-action="CreateOrder">
     <div class="border p-3 mt-4">
         <input asp-for="ProductID" value=@product.ProuctId hidden class="form-control" />
         <div class="row pb-2">
@@ -45,10 +45,8 @@
        
         <div class="mb3">
             <label>Quantity</label>
-            <input asp-for="Qty" type="number" class="form-control" id="a" />
-            <label>Total Price</label>
-            <input asp-for="TotalPrice" name="Price" class="form-control"/>
-            @*<output asp-for="TotalPrice" name="Price" class="form-control" for="a" />*@
+            <input asp-for="Qty" class="form-control"/>
+            <span asp-validation-for="Qty" class="text-danger"></span>
          </div>
         <br />
         <br />

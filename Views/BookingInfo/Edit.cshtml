@@ -25,19 +25,34 @@
 
         </div>
         <br />
-        <div class="input-container">
-            <label asp-for="Image" class="w-40">Image</label>
-            <input type="file" asp-for="Image">
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="BookingSession" class="form-label mt-4">Session Time</label>
+                <select class="form-select" asp-for="BookingSession">
+                    <option>Morning</option>
+                    <option>Afternoon</option>
+                    <option>Evening</option>
+                </select>
+                <span asp-validation-for="BookingSession" class="text-danger"></span>
+            </div>
         </div>
+@*        <div class="input-container">
+            <label asp-for="TableArea" class="w-40">Table Area</label>
+            <select class="form-select" asp-for="Categories">
+                <option itemid="1">Main</option>
+                <option itemid="2" >Outside</option>
+                <option itemid="3">Balcony</option>
+            </select>
+        </div>*@
         <br />
         <div class="input-container">
-            <label asp-for="Category" class="w-40">Category</label>
+            <label asp-for="Category" class="w-40">Table Area </label>
             <select asp-items="Model.CategoryList" class="input" asp-for="Categories" multiple>
                 <option value="">--select--</option>
             </select>
         </div>
         <br />
-        <br />
+
 
         <button type="submit" class="btn btn-primary">Update</button>
         <a asp-controller="BookingInfo" asp-action="Index" class="btn btn-primary">Back To List</a>

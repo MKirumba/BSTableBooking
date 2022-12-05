@@ -17,7 +17,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.AddScoped<IBookingInfoservices, BookingInfoServices>();
 builder.Services.AddScoped<ITableAreaService, TableAreaService>();
-builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 

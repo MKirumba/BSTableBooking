@@ -7,12 +7,12 @@
 
 <div class="container p-3">
     <div>
-        <h2 class="text-primary">Product List</h2>
+        <h2 class="text-primary">Sessions</h2>
     </div>
     <div class="col-6 align-items-end">
          @if (User.IsInRole("admin"))
       {
-        <a asp-controller="BookingInfo" asp-action="Create" class="btn btn-primary" width="20%"><i class="bi bi-plus-circle-fill"></i>&nbsp;Add New Product</a>
+        <a asp-controller="BookingInfo" asp-action="Create" class="btn btn-primary" width="20%"><i class="bi bi-plus-circle-fill"></i>&nbsp;Create New Session</a>
       }
     </div>
 </div>
@@ -26,14 +26,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProductDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnitPrice)
 
+            <th>
+                @Html.DisplayNameFor(model => model.SessionStartTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
-
+                @Html.DisplayNameFor(model => model.SessionEndTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingSession)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryID)
+            </th>
+
+
            
         </tr>
     </thead>
@@ -46,12 +53,19 @@
             <td width="20%">
                 @Html.DisplayFor(modelItem => item.ProductDescription)
             </td>
-            <td width="10%">
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td width="20%">
-                <img style="height:60px;width:80px" src="../Uploads/@item.Image"/>
-            </td>
+                <td width="20%">
+                    @Html.DisplayFor(modelItem => item.SessionStartTime)
+                </td>
+                <td width="20%">
+                    @Html.DisplayFor(modelItem => item.SessionEndTime)
+                </td>
+                <td width="20%">
+                    @Html.DisplayFor(modelItem => item.BookingSession)
+                </td>
+                <td width="20%">
+                    @Html.DisplayFor(modelItem => item.CategoryID)
+                </td>
+
 
 
             <td>
