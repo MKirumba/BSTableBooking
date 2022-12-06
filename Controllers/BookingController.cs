@@ -31,6 +31,9 @@ namespace BSTableBooking.Controllers
 
             var productFormDb = DB.BookingInfo.Find(id);
             var stockQty = DB.AvailTables.Find(id);
+            var tablelocation = DB.TableArea.Find(productFormDb.CategoryID);
+
+            //check this
             productFormDb.Qty = stockQty.Qty;
 
             if (productFormDb == null)
@@ -39,6 +42,10 @@ namespace BSTableBooking.Controllers
             }
 
             ViewData["BookingInfo"] = productFormDb;
+            ViewData["TableLocation"] = tablelocation;
+
+
+
             return View();
             //ViewData["Header"] = "Movie Details"
             //return View(productFormDb);
@@ -55,6 +62,13 @@ namespace BSTableBooking.Controllers
             var pStock = DB.AvailTables.Find(Ord.ProductID);
             pStock.Qty = pStock.Qty - Ord.Qty;
 
+            if (pStock.Qty < 0)
+            {
+                TempData["success"] = "No available seat for session. You can request to be on waiting list";
+                return RedirectToAction("ProductList", "BookingInfo");
+            }
+
+
             //var stock = new AvailTables
             //{
 
@@ -65,6 +79,7 @@ namespace BSTableBooking.Controllers
             DB.SaveChanges();
             DB.AvailTables.Update(pStock);
             DB.SaveChanges();
+
             TempData["success"] = "Booking Submitted Successfully, your order Number is " + Ord.OrderID+" Booking details have been sent to your email";
             return RedirectToAction("ProductList","BookingInfo");
 

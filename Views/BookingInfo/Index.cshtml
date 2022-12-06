@@ -38,9 +38,11 @@
                 @Html.DisplayNameFor(model => model.SessionEndTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model =>model.Category.CategoryName)
+                @Html.DisplayNameFor(model => model.BookingSession)
             </th>
-
+@*            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>*@
 
            
         </tr>
@@ -65,10 +67,10 @@
                 </td>
                 <td width="20%">
                     @Html.DisplayFor(modelItem => item.BookingSession)
-                <td width="20%">
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+@*                <td width="20%">
+                    @Html.DisplayFor(modelItem => @tablelocr)
                 </td>
-
+*@
 
 
             <td>

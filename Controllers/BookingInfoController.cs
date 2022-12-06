@@ -71,7 +71,7 @@ namespace BSTableBooking.Controllers
         {
             
             Pobj.CategoryID = Pobj.Categories;
-         
+ 
             IPservices.CreateProduct(Pobj);
             var stock = new AvailTables
             {
@@ -79,10 +79,10 @@ namespace BSTableBooking.Controllers
                 Qty = 0
             };
             
-
+            stock.Qty = Pobj.Qty;
             DB.AvailTables.Add(stock);
             DB.SaveChanges();
-            TempData["success"] = "Booking Created Successfully";
+            TempData["success"] = "Session Created Successfully";
             return RedirectToAction("Index");
             
 
@@ -116,9 +116,8 @@ namespace BSTableBooking.Controllers
         public IActionResult Edit(BookingInfo Pobj)
         {
             Pobj.CategoryID = Pobj.Categories;
-
             
-
+           
             //if (ModelState.IsValid)
             {
                 DB.BookingInfo.Update(Pobj);

@@ -4,6 +4,7 @@
 @{
     var product = ViewData["BookingInfo"]
     as BSTableBooking.Models.BookingInfo;
+    var tablelocation = ViewData["TableLocation"] as BSTableBooking.Models.TableArea;
 }
 <h1>Book a Table</h1>
 <form id="ProductDetails" asp-action="CreateOrder">
@@ -21,6 +22,11 @@
                 <tr>
                     <td>Session Details</td>
                     <td>@product.ProductDescription</td>
+                </tr>
+                <tr>
+                    <td>Table Area</td>
+
+                    <td>@tablelocation.CategoryName</td>
                 </tr>
                 <tr>
                     <td>Seats Available</td>

@@ -15,7 +15,8 @@ namespace BSTableBooking.Models
         [Required]
         public string ProductDescription { get; set; }
         [Required]
-        public double UnitPrice { get; set; }
+        public int Qty { get; set; }
+        //public double UnitPrice { get; set; }
         public int CategoryID { get; set; }
 
         public TableArea Category { get; set; }
@@ -30,8 +31,8 @@ namespace BSTableBooking.Models
         public IEnumerable<SelectListItem>? CategoryList { get; set; }
         [NotMapped]
         public string? CategoryNames { get; set; }
-        [NotMapped]
-        public int? Qty { get; set; }
+        //[NotMapped]
+        //public int? Qty { get; set; }
 
         //[NotMapped]
         //public int? Qty { get; set; }
