@@ -4,6 +4,7 @@ using BSTableBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    partial class BSTableBookingAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206032735_simplecategorynamereverse")]
+    partial class simplecategorynamereverse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,10 +168,6 @@ namespace BSTableBooking.Migrations
 
                     b.Property<DateTime>("SessionEndTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("TableLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProuctId");
 

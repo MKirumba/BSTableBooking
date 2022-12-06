@@ -1,22 +1,31 @@
 ﻿@model BookingInfo
-<h1>Product</h1>
+<h1>Session Modification</h1>
 <form asp-action="Edit">
     <input asp-for="ProuctId" hidden/>
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h1 class="text-primary">Edit Product</h1>
+            <h1 class="text-primary">Create Product</h1>
         </div>
         <div class="mb-2">
-          
-            <label>Name</label>
+            <label>Session Name</label>
             <input asp-for="ProductName" class="form-control" />
             <span asp-validation-for="ProductName" class="text-danger"></span>
         </div>
-        <div class="mb3">x
-            <label >Description</label>
-            <input asp-for="ProductDescription" class="form-control"/>
+        <div class="mb3">
+            x
+            <label>Session Description</label>
+            <input asp-for="ProductDescription" class="form-control" />
         </div>
         <br />
+        <div class="mb3">
+
+            <label>Session Start Date</label>
+            <input asp-for="SessionStartTime" class="form-control" />
+            <span asp-validation-for="SessionStartTime" class="text-danger"></span>
+
+        </div>
+        <br />
+
         <div class="mb3">
 
             <label>Available Seats</label>
@@ -25,38 +34,42 @@
 
         </div>
         <br />
-        <div class="form-group col-md-4">
-            <div class="form-group">
-                <label asp-for="BookingSession" class="form-label mt-4">Session Time</label>
-                <select class="form-select" asp-for="BookingSession">
-                    <option>Morning</option>
-                    <option>Afternoon</option>
-                    <option>Evening</option>
-                </select>
-                <span asp-validation-for="BookingSession" class="text-danger"></span>
+        <div class="mb3">
+
+            <label>Session End Date</label>
+            <input asp-for="SessionEndTime" class="form-control" />
+            <span asp-validation-for="SessionEndTime" class="text-danger"></span>
+
+        </div>
+        <div class="row justify-content-evenly">
+            <div class="form-group col-md-4">
+                <div class="form-group">
+                    <label asp-for="BookingSession" class="form-label mt-4">Session Time</label>
+                    <select class="form-select" asp-for="BookingSession">
+                        <option>Morning</option>
+                        <option>Afternoon</option>
+                        <option>Evening</option>
+                    </select>
+                    <span asp-validation-for="BookingSession" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group col-md-6">
+                <div class="form-group">
+                    <label asp-for="Category" class="form-label mt-4">Table Area </label>
+                    <select asp-items="Model.CategoryList" class="form-control" asp-for="Categories">
+                    </select>
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row justify-content-lg-around">
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-controller="BookingInfo" asp-action="Index" class="btn btn-primary">Back To List</a>
+                </div>
             </div>
         </div>
-@*        <div class="input-container">
-            <label asp-for="TableArea" class="w-40">Table Area</label>
-            <select class="form-select" asp-for="Categories">
-                <option itemid="1">Main</option>
-                <option itemid="2" >Outside</option>
-                <option itemid="3">Balcony</option>
-            </select>
-        </div>*@
-        <br />
-        <div class="input-container">
-            <label asp-for="Category" class="w-40">Table Area </label>
-            <select asp-items="Model.CategoryList" class="input" asp-for="Categories" multiple>
-                <option value="">--select--</option>
-            </select>
-        </div>
-        <br />
-
-
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a asp-controller="BookingInfo" asp-action="Index" class="btn btn-primary">Back To List</a>
-    </div>
 </form>
 
 @section Scripts{

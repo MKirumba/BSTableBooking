@@ -16,13 +16,14 @@ namespace BSTableBooking.Models
         public string ProductDescription { get; set; }
         [Required]
         public int Qty { get; set; }
-        //public double UnitPrice { get; set; }
+
         public int CategoryID { get; set; }
 
         public TableArea Category { get; set; }
         public AvailTables Stock { get; set; }
         public List<Booking> Order { get; set; } = new List<Booking>();
-        
+
+
 
         [NotMapped]
         [Required]
@@ -31,12 +32,7 @@ namespace BSTableBooking.Models
         public IEnumerable<SelectListItem>? CategoryList { get; set; }
         [NotMapped]
         public string? CategoryNames { get; set; }
-        //[NotMapped]
-        //public int? Qty { get; set; }
-
-        //[NotMapped]
-        //public int? Qty { get; set; }
-
+        [NotMapped]
 
 
         // MK Add
@@ -50,8 +46,11 @@ namespace BSTableBooking.Models
         public DateTime SessionEndTime { get; set; }
         [DisplayName("Booking Session")]
         public string? BookingSession { get; set; }
+        [Required]
+        [DisplayName("Table Location")]
+        public string TableLocation { get; set; }
 
-        
+
 
     }
 }

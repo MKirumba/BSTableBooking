@@ -56,7 +56,7 @@ namespace BSTableBooking.Controllers
         public IActionResult Create()
         {
             var model = new BookingInfo();
-            model.CategoryList = ICService.List().Select(a => new SelectListItem { Text = a.CategoryName, Value = a.CategoryId.ToString()});
+            model.CategoryList = ICService.List().Select(a => new SelectListItem { Text = a.CategoryName, Value = a.CategoryId.ToString() });
             return View(model);
           
           
@@ -69,17 +69,22 @@ namespace BSTableBooking.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(BookingInfo Pobj)
         {
-            
+
             Pobj.CategoryID = Pobj.Categories;
- 
+            var Tablearea = DB.TableArea.Find(Pobj.CategoryID);
+            Pobj.TableLocation = Tablearea.CategoryName;
+
             IPservices.CreateProduct(Pobj);
             var stock = new AvailTables
             {
                 ProductId = Pobj.ProuctId,
                 Qty = 0
-            };
-            
+            };  
             stock.Qty = Pobj.Qty;
+
+ 
+
+
             DB.AvailTables.Add(stock);
             DB.SaveChanges();
             TempData["success"] = "Session Created Successfully";
@@ -98,12 +103,15 @@ namespace BSTableBooking.Controllers
             }
             
             var CategoryFormDb = DB.BookingInfo.Find(id);
- 
+            var Tablearea = DB.TableArea.Find(CategoryFormDb.CategoryID);
+            CategoryFormDb.TableLocation = Tablearea.CategoryName;
+
             if (CategoryFormDb==null)
             {
                 return NotFound();
             }
            CategoryFormDb.CategoryList = ICService.List().Select(a => new SelectListItem { Text = a.CategoryName, Value = a.CategoryId.ToString() });
+            
             return View(CategoryFormDb);
         }
 
@@ -116,8 +124,9 @@ namespace BSTableBooking.Controllers
         public IActionResult Edit(BookingInfo Pobj)
         {
             Pobj.CategoryID = Pobj.Categories;
-            
-           
+            var Tablearea = DB.TableArea.Find(Pobj.CategoryID);
+            Pobj.TableLocation = Tablearea.CategoryName;
+
             //if (ModelState.IsValid)
             {
                 DB.BookingInfo.Update(Pobj);
