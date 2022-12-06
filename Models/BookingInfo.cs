@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,11 +11,13 @@ namespace BSTableBooking.Models
         [Key]
         public int ProuctId { get; set; }
         [Required]
-        [DisplayName("BookingInfo Name")]
+        [DisplayName("Session Name")]
         public string ProductName { get; set; }
         [Required]
+        [DisplayName("Session Description")]
         public string ProductDescription { get; set; }
         [Required]
+        [DisplayName("Seats Capacity")]
         public int Qty { get; set; }
 
         public int CategoryID { get; set; }
@@ -40,14 +43,17 @@ namespace BSTableBooking.Models
 
         [Required]
         [DisplayName("Session Start Time")]
-        public DateTime SessionStartTime { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime SessionStartTime { get; set; } = DateTime.Now;
         [Required]
         [DisplayName("Session End Time")]
-        public DateTime SessionEndTime { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime SessionEndTime { get; set; } = DateTime.Now;
+        [Required]
         [DisplayName("Booking Session")]
         public string? BookingSession { get; set; }
         [Required]
-        [DisplayName("Table Location")]
+        [DisplayName("Seating Location")]
         public string TableLocation { get; set; }
 
 

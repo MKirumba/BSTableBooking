@@ -2,14 +2,14 @@
 @model Booking
 
 @{
-    var product = ViewData["BookingInfo"]
+    var session = ViewData["SessionInfo"]
     as BSTableBooking.Models.BookingInfo;
     var tablelocation = ViewData["TableLocation"] as BSTableBooking.Models.TableArea;
 }
 <h1>Book a Table</h1>
 <form id="ProductDetails" asp-action="CreateOrder">
     <div class="border p-3 mt-4">
-        <input asp-for="ProductID" value=@product.ProuctId hidden class="form-control" />
+        <input asp-for="ProductID" value=@session.ProuctId hidden class="form-control" />
         <div class="row pb-2">
             <h2 class="text-primary">Session Details</h2>
         </div>
@@ -17,21 +17,21 @@
             <table style="font-family:Arial">
                 <tr>
                     <td>Session Name</td>
-                    <td>@product.ProductName</td>
+                    <td>@session.ProductName</td>
                 </tr>
                 <tr>
                     <td>Session Details</td>
-                    <td>@product.ProductDescription</td>
+                    <td>@session.ProductDescription</td>
                 </tr>
                 <tr>
                     <td>Table Area</td>
 
-                    <td>@tablelocation.CategoryName</td>
+                    <td>@tablelocation.CategoryName</td >
                 </tr>
                 <tr>
                     <td>Seats Available</td>
                     
-                    <td>@product.Qty</td>    
+                    <td>@session.Qty</td>    
                 </tr>
 
             </table>

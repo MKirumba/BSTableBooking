@@ -73,8 +73,8 @@
 
 
 
-            <td>
-                <a asp-controller="Order" asp-action="CreateOrder" asp-route-id="@item.ProuctId" class="btn btn-outline-primary mx-3">Order</a>
+            <td class="row justify-content-evenly">
+                <a asp-controller="Booking" asp-action="CreateOrder" asp-route-id="@item.ProuctId" class="btn btn-outline-primary btn- mx-3 ">Order</a>
                 @if (User.IsInRole("admin"))
                 {
                     <a asp-controller="BookingInfo" asp-action="Edit" asp-route-id="@item.ProuctId" class="btn btn-outline-primary mx-3">Edit</a>

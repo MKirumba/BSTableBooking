@@ -1,19 +1,19 @@
 ﻿@model BookingInfo
 
 
-<h1>Create Session</h1>
+<h1>Sessions</h1>
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h1 class="text-primary">Create Product</h1>
+            <h1 class="text-primary">Create Session</h1>
         </div>
         <div class="mb-2">
-            <label>Name</label>
+            <label>Session Name</label>
             <input asp-for="ProductName" class="form-control" />
             <span asp-validation-for="ProductName" class="text-danger"></span>
         </div>
-        <div class="mb3">x
-            <label >Description</label>
+        <div class="mb3">
+            <label >Session Description</label>
             <input asp-for="ProductDescription" class="form-control"/>
         </div>
         <br />
@@ -28,7 +28,7 @@
 
         <div class="mb3">
 
-            <label>Available Seats</label>
+            <label>Seating Capacity</label>
             <input asp-for="Qty" class="form-control" />
             <span asp-validation-for="Qty" class="text-danger"></span>
 
@@ -65,7 +65,7 @@
         <br />
         <div class="row justify-content-lg-around">
             <div class="col-4">
-        <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
         <a asp-controller="BookingInfo" asp-action="Index" class="btn btn-primary">Back To List</a>
             </div>
             </div>

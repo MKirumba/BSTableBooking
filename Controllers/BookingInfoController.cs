@@ -5,6 +5,7 @@ using BSTableBooking.Data;
 using BSTableBooking.Models;
 using BSTableBooking.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace BSTableBooking.Controllers
 {
@@ -127,9 +128,18 @@ namespace BSTableBooking.Controllers
             var Tablearea = DB.TableArea.Find(Pobj.CategoryID);
             Pobj.TableLocation = Tablearea.CategoryName;
 
+            var availcap = new AvailTables
+            {
+                ProductId = Pobj.ProuctId,
+                Qty = Pobj.Qty,
+            };
+
+
+
             //if (ModelState.IsValid)
             {
                 DB.BookingInfo.Update(Pobj);
+                DB.AvailTables.Update(availcap);
                 DB.SaveChanges();
 
 

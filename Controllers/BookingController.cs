@@ -29,26 +29,26 @@ namespace BSTableBooking.Controllers
                 return NotFound();
             }
 
-            var productFormDb = DB.BookingInfo.Find(id);
+            var sessionFormDb = DB.BookingInfo.Find(id);
             var stockQty = DB.AvailTables.Find(id);
-            var tablelocation = DB.TableArea.Find(productFormDb.CategoryID);
+            var tablelocation = DB.TableArea.Find(sessionFormDb.CategoryID);
 
             //check this
-            productFormDb.Qty = stockQty.Qty;
+            sessionFormDb.Qty = stockQty.Qty;
 
-            if (productFormDb == null)
+            if (sessionFormDb == null)
             {
                 return NotFound();
             }
 
-            ViewData["BookingInfo"] = productFormDb;
+            ViewData["SessionInfo"] = sessionFormDb;
             ViewData["TableLocation"] = tablelocation;
 
 
 
             return View();
             //ViewData["Header"] = "Movie Details"
-            //return View(productFormDb);
+            //return View(sessionFormDb);
         }
 
         [HttpPost]
