@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,7 +27,7 @@ namespace BSTableBooking.Models
 
         [DisplayName("Start Time")]
         public DateTime BookingStartTime { get; set; } = DateTime.Now;
-        [DisplayName("Start Time")]
+        [DisplayName("End Time")]
         public DateTime BookingEndTime { get; set; } = DateTime.Now;
         [DisplayName("Booking Duration")]
         public int BookingDuration { get; set; }

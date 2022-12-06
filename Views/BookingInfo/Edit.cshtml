@@ -15,7 +15,7 @@
             <span asp-validation-for="ProductName" class="text-danger"></span>
         </div>
         <div class="mb3">
-            x
+            
             <label>Session Description</label>
             <input asp-for="ProductDescription" class="form-control" />
         </div>
@@ -59,7 +59,7 @@
             <br />
             <div class="form-group col-md-6">
                 <div class="form-group">
-                    <label asp-for="Category" class="form-label mt-4">Table Area </label>
+                    <label asp-for="Category" class="form-label mt-4">Table Area </label>      
                     <select asp-items="Model.CategoryList" class="form-control" asp-for="Categories">
                     </select>
                     <span asp-validation-for="Category" class="text-danger"></span>

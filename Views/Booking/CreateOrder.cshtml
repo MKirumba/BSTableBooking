@@ -1,69 +1,172 @@
-﻿
-@model Booking
+﻿@model Booking;
 
 @{
+    //ViewData["Title"] = "Create";
     var session = ViewData["SessionInfo"]
     as BSTableBooking.Models.BookingInfo;
     var tablelocation = ViewData["TableLocation"] as BSTableBooking.Models.TableArea;
 }
-<h1>Book a Table</h1>
-<form id="ProductDetails" asp-action="CreateOrder">
-    <div class="border p-3 mt-4">
-        <input asp-for="ProductID" value=@session.ProuctId hidden class="form-control" />
-        <div class="row pb-2">
-            <h2 class="text-primary">Session Details</h2>
-        </div>
-        <div class="mb-2">
-            <table style="font-family:Arial">
-                <tr>
-                    <td>Session Name</td>
-                    <td>@session.ProductName</td>
-                </tr>
-                <tr>
-                    <td>Session Details</td>
-                    <td>@session.ProductDescription</td>
-                </tr>
-                <tr>
-                    <td>Table Area</td>
 
-                    <td>@tablelocation.CategoryName</td >
-                </tr>
-                <tr>
-                    <td>Seats Available</td>
+
+<h1>Bean Scene</h1>
+
+<h4>Make a Booking</h4>
+<hr />
+<div class="row g-3">
+    <div class="col">
+        <form id="ProductDetails" asp-action="CreateOrder">
+            <input asp-for="ProductID" value=@session.ProuctId hidden class="form-control" />
+
+            <div class="row justify-content-evenly">
+                    <div class="form-group col-md-4">
+                        <label asp-for=@session.ProductName class="control-label"></label>
+                        <input asp-for=@session.ProductName readonly class ="form-control" />
                     
-                    <td>@session.Qty</td>    
-                </tr>
+                    </div>
+            <div class="form-group col-md-4">
+                    <label asp-for=@session.ProductDescription class="control-label"></label>
+                    <input asp-for=@session.ProductDescription readonly class="form-control" />
+                </div>
+                </div>
 
-            </table>
-        </div>
-    <div class="row pb-2">
-        <h2 class="text-primary">Order Details</h2>
-    </div>
+            <div class="row justify-content-evenly">
+                <div class="form-group col-md-4">
+                    <label asp-for=@tablelocation.CategoryName class="control-label"></label>
+                    <input asp-for=@tablelocation.CategoryName readonly class="form-control" />
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for=@session.Qty class="control-label"></label>
+                    <input asp-for=@session.Qty type="text" readonly class="form-control" />
+                </div>
+            </div>
+
+            <div class="row justify-content-evenly">
+                <div class="form-group col-md-4">
+                    <label asp-for="OrderDescription" class="control-label"></label>
+                    <input asp-for="OrderDescription" class="form-control" />
+                    <span asp-validation-for="OrderDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="Qty" class="control-label"></label>
+                    <input asp-for="Qty" inputtype = "numeric" class="form-control" />
+                    <span asp-validation-for="Qty" class="text-danger"></span>
+                </div>
+                </div>
+               
+                <div class="row justify-content-evenly">
+                    <div class="form-group col-md-4">
+                        <div class="form-group">
+                            <label asp-for="BookingDuration"  class="form-label mt-4">Booking Duration</label>
+                        <select class="form-select" id="durat" asp-for="BookingDuration">
+                                <option>30</option>
+                                <option>45</option>
+                                <option>60</option>
+                                <option>75</option>
+                                <option>90</option>
+                                <option>105</option>
+                                <option>120</option>
+                            </select>
+                            <span asp-validation-for="BookingDuration" class="text-danger"></span>
+                        </div>
+                    </div>
+                   
+                <div class="row justify-content-evenly">
+                    <div class="form-group col-md-4">
+                        <label asp-for="BookingStartTime"  class="control-label"></label>
+                        <input asp-for="BookingStartTime" id="strt" oninput="endtime.Value= (durat + strt)" class="form-control" />
+
+                        <span asp-validation-for="BookingStartTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="BookingEndTime" class="control-label"></label>
+                        <input asp-for="BookingEndTime" name="endtime" class="form-control" />
+                        <span asp-validation-for="BookingEndTime" class="text-danger"></span>
+                    </div>
+                </div>
+             
+                        <div class="row justify-content-evenly">
+                        <div class="form-group col-md-4">
+                            <label asp-for="BookingNotes" class="control-label"></label>
+                            <input asp-for="BookingNotes" class="form-control" />
+                            <span asp-validation-for="BookingNotes" class="text-danger"></span>
+                        </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="BookingSource" class="control-label"></label>
+                        <input asp-for="BookingSource" class="form-control" />
+                        <span asp-validation-for="BookingSource" class="text-danger"></span>
+                    </div>
+                    </div>
+                    </div>
+
+                    @*Only for Admin View*@
+            <div class="row justify-content-evenly">
+                    <div class="form-group col-md-4">
+                        <div class="form-group">
+                            <label asp-for="BookingStatus" class="form-label mt-4">Booking StatusArea</label>
+                            <select class="form-select" asp-for="BookingStatus">
+                                <option>Pending</option>
+                                <option>Confirmed</option>
+                                <option>Seated</option>
+                                <option>Completed</option>
+                                <option>Cancelled</option>
+                            </select>
+                            <span asp-validation-for="BookingStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                    </div>
+               
+               
+
+        <br />
+        <br />
         <div>
-            <label>Booking Details</label>
-            <input asp-for="OrderDescription" class="form-control" />
-            <span asp-validation-for="OrderDescription" class="text-danger"></span>
-        </div>
-       
-        <div class="mb3">
-            <label>Number of people</label>
-            <input asp-for="Qty" class="form-control"/>
-            <span asp-validation-for="Qty" class="text-danger"></span>
-         </div>
-        <br />
-        <br />
-
         <button type="submit" class="btn btn-primary">Submit</button>
         <a asp-controller="BookingInfo" asp-action="ProductList" class="btn btn-primary">Back To List</a>
-    </div>
+    
+
+            </div>
+            
+           
+
 </form>
-
-
 
 
 @section Scripts{
     @{
-        <partial name="_ValidationscriptsPartial" />
+    <partial name="_ValidationscriptsPartial" />
     }
 
 }
+@*
+             @model Bookings
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+
+
+
+
+  
+
+            <div class="form-group col-md-4 ">
+                <input type="submit" value="Create" class="btn btn-outline-success" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }*@
