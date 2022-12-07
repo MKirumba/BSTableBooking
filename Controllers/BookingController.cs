@@ -18,7 +18,7 @@ namespace BSTableBooking.Controllers
             DB = _Db;
 
         }
-        public IActionResult Index()
+        public IActionResult Index() 
         {
             return View();
         }

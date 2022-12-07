@@ -25,10 +25,13 @@ namespace BSTableBooking.Models
 
         //MK added
 
+        [Required]
         [DisplayName("Start Time")]
         public DateTime BookingStartTime { get; set; } = DateTime.Now;
+        [Required]
         [DisplayName("End Time")]
         public DateTime BookingEndTime { get; set; } = DateTime.Now;
+        [Required]
         [DisplayName("Booking Duration")]
         public int BookingDuration { get; set; }
         [DisplayName("Booking Source")]

@@ -4,6 +4,7 @@ using BSTableBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    partial class BSTableBookingAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206121828_BookingModelupdate")]
+    partial class BookingModelupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,19 +102,13 @@ namespace BSTableBooking.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BookDay")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("LastUpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "BookDay");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasKey("ProductId");
 
                     b.ToTable("AvailTables");
                 });
