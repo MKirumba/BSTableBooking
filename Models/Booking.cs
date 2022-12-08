@@ -13,7 +13,7 @@ namespace BSTableBooking.Models
         [Required]
         [DisplayName("Session")]
         public int ProductID { get; set; }
-        public DateTime OrderDate { get; set; }= new DateTime();
+        public DateTime OrderDate { get; set; } = DateTime.Now;
 
         [DisplayName("Customer Name")]
         public string OrderDescription { get; set; }

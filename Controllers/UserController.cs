@@ -39,6 +39,7 @@ namespace BSTableBooking.Controllers
         public async Task<IActionResult> CreateUser(RegistrationModel model)
         {
             if (!ModelState.IsValid) { return View(model); }
+            
             model.Role = "admin";
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;

@@ -1,0 +1,70 @@
+﻿@model BSTableBooking.Models.Booking
+
+
+<h4>Booking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="BookingEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderID" />
+            <div class="form-group">
+                <label asp-for="ProductID" class="control-label"></label>
+                <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductID"></select>
+                <span asp-validation-for="ProductID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderDescription" class="control-label"></label>
+                <input asp-for="OrderDescription" class="form-control" />
+                <span asp-validation-for="OrderDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Qty" class="control-label"></label>
+                <input asp-for="Qty" class="form-control" />
+                <span asp-validation-for="Qty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingStartTime" class="control-label"></label>
+                <input asp-for="BookingStartTime" class="form-control" />
+                <span asp-validation-for="BookingStartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingEndTime" class="control-label"></label>
+                <input asp-for="BookingEndTime" class="form-control" />
+                <span asp-validation-for="BookingEndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingDuration" class="control-label"></label>
+                <input asp-for="BookingDuration" class="form-control" />
+                <span asp-validation-for="BookingDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingSource" class="control-label"></label>
+                <input asp-for="BookingSource" class="form-control" />
+                <span asp-validation-for="BookingSource" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingNotes" class="control-label"></label>
+                <input asp-for="BookingNotes" class="form-control" />
+                <span asp-validation-for="BookingNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingStatus" class="control-label"></label>
+                <input asp-for="BookingStatus" class="form-control" />
+                <span asp-validation-for="BookingStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BookingList">Back to List</a>
+</div>

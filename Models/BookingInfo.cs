@@ -45,11 +45,12 @@ namespace BSTableBooking.Models
         [DisplayName("Session Start Time")]
         [DataType(DataType.Date)]
         public DateTime SessionStartTime { get; set; } = DateTime.Now;
+
         [Required]
         [DisplayName("Session End Time")]
         [DataType(DataType.Date)]
         public DateTime SessionEndTime { get; set; } = DateTime.Now;
-        [Required]
+
         [DisplayName("Booking Session")]
         public string? BookingSession { get; set; }
         [Required]

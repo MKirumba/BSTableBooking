@@ -1,8 +1,9 @@
-
+﻿
 using Microsoft.EntityFrameworkCore;
 using BSTableBooking.Data;
 using BSTableBooking.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +16,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddEntityFrameworkStores<BSTableBookingAppDbContext>()
        .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<IBookingInfoservices, BookingInfoServices>();
+builder.Services.AddScoped<IBookingInfoServices, BookingInfoService>();
 builder.Services.AddScoped<ITableAreaService, TableAreaService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 
 var app = builder.Build();

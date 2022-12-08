@@ -8,7 +8,7 @@ namespace BSTableBooking.Models
 {
     public class AvailTables
     {
-        [Key]
+        
         [Required]
         public int ProductId { get; set; }
         [Required]
@@ -20,9 +20,11 @@ namespace BSTableBooking.Models
 
 
         [Required]
-        public DateTime BookDay { get; set; } = DateTime.Now;
-       
+        [DataType(DataType.Date)]
+        public DateTime BookDay { get; set; }
 
+        [Required]
+        public string Session { get; set; }
 
     }
 }

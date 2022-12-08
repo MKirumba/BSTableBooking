@@ -13,10 +13,10 @@ namespace BSTableBooking.Controllers
     public class BookingInfoController : Controller
     {
         BSTableBookingAppDbContext DB;
-        IBookingInfoservices IPservices;
+        IBookingInfoServices IPservices;
         ITableAreaService ICService;
 
-        public BookingInfoController( BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoservices _IPservices)
+        public BookingInfoController( BSTableBookingAppDbContext _Db, ITableAreaService _Categoryservices, IBookingInfoServices _IPservices)
         {
             ICService= _Categoryservices;
             IPservices = _IPservices;
@@ -79,6 +79,8 @@ namespace BSTableBooking.Controllers
             var stock = new AvailTables
             {
                 ProductId = Pobj.ProuctId,
+                Session = Pobj.BookingSession,
+                BookDay = Pobj.SessionEndTime,
                 Qty = 0
             };  
             stock.Qty = Pobj.Qty;

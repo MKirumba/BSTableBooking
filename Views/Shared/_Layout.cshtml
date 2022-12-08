@@ -13,62 +13,62 @@
 </head>
 <body>
     <header>
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-            <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="Index">Session</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="ProductList">Booking List</a>
-            </li>
-            @if (User.IsInRole("admin"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="CreateUser">Create User</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor02">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="ProductList">Make a Booking</a>
+                        </li>
+
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="CreateUser">Create User</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="Index">Session Settings</a>
                 </li>
             }
-
-           
+                        @if (User.IsInRole("admin") || (User.IsInRole("staff")))
+            {
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            </ul>
-            <ul>
+            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="BookingList">Booking List</a>
+             </li>
+            }
+        
             @if (string.IsNullOrEmpty(userName))
             {
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="Registration">Register</a>
 
-                </li>
+           </li>
+             <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="User" asp-action="Registration">Sign Up / Register</a>
+                            </li>
              }
-            </ul>
-            
-            <ul>
+     
                 @if (!string.IsNullOrEmpty(userName))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="User" asp-action="ChangePassword">Forgot Password</a>
-                    </li>
+
                 }
             </ul>
 
            
-            <form class="d-flex">
+@*            <form class="d-flex">
             <input class="form-control me-sm-2" type="text" placeholder="Search">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </form>*@
             </div>
            </div>
        </nav>

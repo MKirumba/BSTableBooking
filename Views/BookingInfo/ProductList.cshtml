@@ -62,7 +62,7 @@
 
 
             <td>
-                    <a asp-controller="Booking" asp-action="CreateOrder" asp-route-id="@item.ProuctId" class="btn btn-outline-primary mx-3">Order</a>
+                    <a asp-controller="Booking" asp-action="CreateOrder" asp-route-id="@item.ProuctId" asp-route-qty="@item.Qty" asp-route-bookday="@item.SessionEndTime" asp-route-sessiontime="@item.BookingSession" class="btn btn-outline-primary mx-3">Order</a>
             </td>
         </tr>
 }

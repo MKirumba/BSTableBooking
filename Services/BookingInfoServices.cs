@@ -1,12 +1,13 @@
 ﻿using BSTableBooking.Models;
 using BSTableBooking.Data;
+
 namespace BSTableBooking.Services
 {
-    public class BookingInfoServices: IBookingInfoservices
+    public class BookingInfoService: IBookingInfoServices
     {
         
         BSTableBookingAppDbContext Db;
-        public BookingInfoServices(BSTableBookingAppDbContext _Db)
+        public BookingInfoService(BSTableBookingAppDbContext _Db)
         {
             Db = _Db;
         }
