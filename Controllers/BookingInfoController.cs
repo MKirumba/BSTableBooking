@@ -134,9 +134,11 @@ namespace BSTableBooking.Controllers
             {
                 ProductId = Pobj.ProuctId,
                 Qty = Pobj.Qty,
+                Session = Pobj.BookingSession,
+                BookDay = Pobj.SessionEndTime,
+                LastUpdatedDate = DateTime.Now,
+
             };
-
-
 
             //if (ModelState.IsValid)
             {

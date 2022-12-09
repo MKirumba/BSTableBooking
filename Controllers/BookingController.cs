@@ -50,7 +50,7 @@ namespace BSTableBooking.Controllers
             var stockQty = DB.AvailTables.Find(id,newstockQty.BookDay, newstockQty.Session);
             var tablelocation = DB.TableArea.Find(sessionFormDb.CategoryID);
 
-            //sessionFormDb.Qty = stockQty.Qty;
+           // sessionFormDb.Qty = stockQty.Qty;
 
           
 
@@ -103,15 +103,20 @@ namespace BSTableBooking.Controllers
         {
 
             var sessionFormDb = DB.BookingInfo.Find(Ord.ProductID);
-            var Availtable = DB.AvailTables.Find(sessionFormDb.CategoryID, sessionFormDb.SessionEndTime, sessionFormDb.BookingSession);
+            var Availtable = DB.AvailTables.Find(sessionFormDb.ProuctId, sessionFormDb.SessionEndTime, sessionFormDb.BookingSession);
 
-            if (Availtable != null)
-            {
-                Availtable.Qty = Availtable.Qty - Ord.Qty;
-                DB.AvailTables.Update(Availtable);
-                DB.SaveChanges();
+            //if (Availtable != null)
+            //{
+            //    Availtable.Qty = Availtable.Qty - Ord.Qty;
+            //    DB.AvailTables.Update(Availtable);
+            //    DB.SaveChanges();
 
-            }
+            //}
+
+
+            Availtable.Qty = sessionFormDb.Qty - Ord.Qty;
+            DB.AvailTables.Update(Availtable);
+            DB.SaveChanges();
 
 
             //if (Availtable == null)
@@ -130,7 +135,7 @@ namespace BSTableBooking.Controllers
             //    DB.SaveChanges();
             //}
 
-            
+
             //if (Availtable.Qty < 0)
             //{
             //    TempData["success"] = "No available seat for session. Please call to be on waiting list";
@@ -146,64 +151,120 @@ namespace BSTableBooking.Controllers
             //    DB.SaveChanges();
             //}
             TempData["success"] = "Booking Submitted Successfully, your order Number is " + Ord.OrderID+" Booking details have been sent to your email";
-            return RedirectToAction("Index");
+            return RedirectToAction("BookingList");
 
         }
 
-        // display Edit view
-        [Authorize(Roles = "admin,staff")]    
-        public IActionResult BookingEdit(int? id)
+        //// display Edit view
+        //[Authorize(Roles = "admin,staff")]    
+        //public IActionResult BookingEdit(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var CategoryFormDb = DB.Booking.Find(id);
+
+
+        //    if (CategoryFormDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    CategoryFormDb.ProductID = IBservice.Find().Select(a => new SelectListItem { Text = a.CategoryName, Value = a.CategoryId.ToString() });
+
+        //    return View(CategoryFormDb);
+        //}
+
+        //[Authorize(Roles = "admin,staff")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        //public IActionResult Edit(Booking Pobj)
+        //{
+        //    //Pobj.CategoryID = Pobj.Categories;
+        //    //var Tablearea = DB.TableArea.Find(Pobj.CategoryID);
+        //    //Pobj.TableLocation = Tablearea.CategoryName;
+
+        //    //var availcap = new AvailTables
+        //    //{
+        //    //    ProductId = Pobj.ProuctId,
+        //    //    Qty = Pobj.Qty,
+        //    //};
+
+        //    //if (ModelState.IsValid)
+
+        //    var exProduct = DB.BookingInfo.Find(Pobj.ProductID);
+
+
+
+        //    DB.Booking.Update(Pobj);
+        //    DB.SaveChanges();
+
+
+        //        ViewData["ProductID"] = new SelectList(DB.BookingInfo, "ProuctId", "ProductDescription", Pobj.ProductID);
+
+        //        TempData["success"] = "Session Updated Successfully";
+        //        //return RedirectToAction("BookingList");
+
+        //    return View(Pobj);
+        //}
+
+        // GET: Bookings1/Edit/5
+        public async Task<IActionResult> BookingEdit(int? id)
         {
-            if (id == null || id == 0)
+            if (id == null || DB.Booking == null)
             {
                 return NotFound();
             }
 
-            var CategoryFormDb = DB.Booking.Find(id);
-
-
-            if (CategoryFormDb == null)
+            var booking = await DB.Booking.FindAsync(id);
+            if (booking == null)
             {
                 return NotFound();
             }
-          
 
-            return View(CategoryFormDb);
+
+
+            ViewData["ProductID"] = new SelectList(DB.BookingInfo, "ProuctId", "ProductDescription", booking.ProductID);
+            return View(booking);
         }
 
-        [Authorize(Roles = "admin,staff")]
+        // POST: Bookings1/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public IActionResult Edit(Booking Pobj)
+        public async Task<IActionResult> BookingEdit(int id, [Bind("OrderID,ProductID,OrderDate,OrderDescription,Qty,BookingStartTime,BookingEndTime,BookingDuration,BookingSource,BookingNotes,BookingStatus")] Booking booking)
         {
-            //Pobj.CategoryID = Pobj.Categories;
-            //var Tablearea = DB.TableArea.Find(Pobj.CategoryID);
-            //Pobj.TableLocation = Tablearea.CategoryName;
-
-            //var availcap = new AvailTables
-            //{
-            //    ProductId = Pobj.ProuctId,
-            //    Qty = Pobj.Qty,
-            //};
-
-
-
-            //if (ModelState.IsValid)
+            if (id != booking.OrderID)
             {
-                DB.Booking.Update(Pobj);
-                //DB.AvailTables.Update(availcap);
-                DB.SaveChanges();
-
-
-
-                TempData["success"] = "Session Updated Successfully";
-                return RedirectToAction("BookingList");
+                return NotFound();
             }
-            //return View(Pobj);
+
+            using (var transaction = DB.Database.BeginTransaction())
+            {
+                try
+                {
+                        booking.ProductID = id;
+                       DB.Booking.Update(booking);
+                        
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    DB.Remove(booking);
+                    transaction.Rollback();
+                }
+            }
+
+       
+      
+          
+            ViewData["ProductID"] = new SelectList(DB.BookingInfo, "ProuctId", "ProductDescription", booking.ProductID);
+            return View(booking);
         }
-
-
 
 
 
@@ -229,12 +290,6 @@ namespace BSTableBooking.Controllers
 
 
         }
-
-
-
-
-
-
 
 
         [Authorize(Roles = "admin")]
@@ -272,7 +327,11 @@ namespace BSTableBooking.Controllers
             return View();
         }
 
-
+        // checks of booking exists
+        private bool BookingExists(int id)
+        {
+            return DB.Booking.Any(e => e.OrderID == id);
+        }
 
 
 
