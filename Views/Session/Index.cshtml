@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BSTableBooking.Models.BookingInfo>
+﻿@model IEnumerable<BSTableBooking.Models.Session>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <div class="col-6 align-items-end">
          @if (User.IsInRole("admin"))
       {
-        <a asp-controller="BookingInfo" asp-action="Create" class="btn btn-primary" width="20%"><i class="bi bi-plus-circle-fill"></i>&nbsp;Create New Session</a>
+        <a asp-controller="Session" asp-action="Create" class="btn btn-primary" width="20%"><i class="bi bi-plus-circle-fill"></i>&nbsp;Create New Session</a>
       }
     </div>
 </div>
@@ -22,10 +22,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                @Html.DisplayNameFor(model => model.SessionName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductDescription)
+                @Html.DisplayNameFor(model => model.SessionDescription)
             </th>
             <th>
                 @Html.DisplayNameFor(model =>model.Qty)
@@ -51,10 +51,10 @@
 @foreach (var item in Model) {
         <tr>
             <td width="20%">
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.DisplayFor(modelItem => item.SessionName)
             </td>
             <td width="20%">
-                @Html.DisplayFor(modelItem => item.ProductDescription)
+                @Html.DisplayFor(modelItem => item.SessionDescription)
             </td>
                 <td width="20%">
                     @Html.DisplayFor(modelItem => item.Qty)
@@ -74,11 +74,11 @@
 
 
             <td class="row justify-content-evenly">
-                    <a asp-controller="Booking" asp-action="CreateOrder" asp-route-id="@item.ProuctId" asp-route-qty="@item.Qty" asp-route-bookday="@item.SessionEndTime" asp-route-sessiontime="@item.BookingSession" class="btn btn-outline-primary btn- mx-3 ">Order</a>
+                    <a asp-controller="Booking" asp-action="CreateBooking" asp-route-id="@item.SessionID" asp-route-qty="@item.Qty" asp-route-bookday="@item.SessionEndTime" asp-route-sessiontime="@item.BookingSession" class="btn btn-outline-primary btn- mx-3 ">Booking</a>
                 @if (User.IsInRole("admin"))
                 {
-                    <a asp-controller="BookingInfo" asp-action="Edit" asp-route-id="@item.ProuctId" class="btn btn-outline-primary mx-3">Edit</a>
-                        <a asp-controller="BookingInfo" asp-action="Delete" asp-route-id="@item.ProuctId" class="btn btn-outline-primary mx-3">Delete</a>
+                    <a asp-controller="Session" asp-action="Edit" asp-route-id="@item.SessionID" class="btn btn-outline-primary mx-3">Edit</a>
+                        <a asp-controller="Session" asp-action="Delete" asp-route-id="@item.SessionID" class="btn btn-outline-primary mx-3">Delete</a>
                 }
             </td>
         </tr>

@@ -8,22 +8,29 @@ namespace BSTableBooking.Models
     {
         
         [Key]
-        public int OrderID { get; set; }
+        public int BookingID { get; set; }
+
         
-        [Required]
-        [DisplayName("Session")]
-        public int ProductID { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.Now;
+        //[DisplayName("Session")]
+        //public int? SessionID { get; set; }
+        public DateTime BookingDate { get; set; } = DateTime.Now;
 
         [DisplayName("Customer Name")]
-        public string OrderDescription { get; set; }
+        public string BookingDescription { get; set; }
         [Required]
-        [DisplayName("Number of Guests")]
+        [DisplayName("Number of Guests")] 
         public int Qty { get; set; }
 
-        public BookingInfo Product { get; set; }
+      
+        public AvailTables SessionID { get; set; }
+       // public Session Session { get; set; }
+
+        //[ForeignKey("SessionID")]
+        //public List<Session> Session { get; set; }
+
 
         //MK added
+
 
         [Required]
         [DisplayName("Start Time")]
@@ -40,6 +47,11 @@ namespace BSTableBooking.Models
         public string? BookingNotes { get; set; }
         [DisplayName("Booking Status")]
         public string? BookingStatus { get; set; }
+
+        [NotMapped]
+        public string BookingTableLocation { get; set; }
+
+
 
 
 

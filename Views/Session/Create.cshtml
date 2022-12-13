@@ -1,20 +1,20 @@
-﻿@model BookingInfo
+﻿@model Session
 
 
 <h1>Sessions</h1>
 <form method="post">
-    <div class="border p-3 mt-4">
+    <div class="Booking p-3 mt-4">
         <div class="row pb-2">
             <h1 class="text-primary">Create Session</h1>
         </div>
         <div class="mb-2">
             <label>Session Name</label>
-            <input asp-for="ProductName" class="form-control" />
-            <span asp-validation-for="ProductName" class="text-danger"></span>
+            <input asp-for="SessionName" class="form-control" />
+            <span asp-validation-for="SessionName" class="text-danger"></span>
         </div>
         <div class="mb3">
             <label >Session Description</label>
-            <input asp-for="ProductDescription" class="form-control"/>
+            <input asp-for="SessionDescription" class="form-control"/>
         </div>
         <br />
         <div class="mb3">
@@ -56,17 +56,17 @@
         <br />
             <div class="form-group col-md-6">
                 <div class="form-group">
-                <label asp-for="Category" class="form-label mt-4">Table Area </label>
-            <select asp-items="Model.CategoryList" class="form-select" asp-for="Categories">           
+                <label asp-for="TableArea" class="form-label mt-4">Table Area </label>
+            <select asp-items="Model.TableAreaList" class="form-select" asp-for="TableAreas">           
                 </select>
-                    <span asp-validation-for="Category" class="text-danger"></span>
+                    <span asp-validation-for="TableArea" class="text-danger"></span>
             </div>
             </div>
         <br />
         <div class="row justify-content-lg-around">
             <div class="col-4">
                     <button type="submit" class="btn btn-primary">Create</button>
-        <a asp-controller="BookingInfo" asp-action="Index" class="btn btn-primary">Back To List</a>
+        <a asp-controller="Session" asp-action="Index" class="btn btn-primary">Back To List</a>
             </div>
             </div>
     </div>

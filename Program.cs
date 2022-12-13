@@ -16,7 +16,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddEntityFrameworkStores<BSTableBookingAppDbContext>()
        .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<IBookingInfoServices, BookingInfoService>();
+builder.Services.AddScoped<ISessionServices, SessionService>();
 builder.Services.AddScoped<ITableAreaService, TableAreaService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
@@ -28,7 +28,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // The default HSTS value is 30 days. You may want to change this for Sessionion scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

@@ -12,16 +12,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
+                @Html.DisplayNameFor(model => model.BookingDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OrderDescription)
+                @Html.DisplayNameFor(model => model.BookingDescription)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Qty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+              @*  @Html.DisplayNameFor(model => model.Session.BookingSession)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingStartTime)
@@ -48,16 +48,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
+                @Html.DisplayFor(modelItem => item.BookingDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderDescription)
+                @Html.DisplayFor(modelItem => item.BookingDescription)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Qty)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductDescription)
+             @*   @Html.DisplayFor(modelItem => item.Session.BookingSession)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookingStartTime)
@@ -79,8 +79,8 @@
             </td>
             <td>
 
-                        <a asp-action="BookingEdit" class="btn btn-outline-primary mx-3" asp-route-id="@item.OrderID">Edit</a>
-                        <a asp-action="BookingDelete" class="btn btn-outline-primary mx-3" asp-route-id="@item.OrderID">Delete</a>
+                        <a asp-action="BookingEdit" class="btn btn-outline-primary mx-3" asp-route-id="@item.BookingID">Edit</a>
+                        <a asp-action="BookingDelete" class="btn btn-outline-primary mx-3" asp-route-id="@item.BookingID">Delete</a>
                            
             </td>
         </tr>

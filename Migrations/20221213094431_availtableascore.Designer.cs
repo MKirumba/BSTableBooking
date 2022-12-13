@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    [Migration("20221207093505_availtablekey")]
-    partial class availtablekey
+    [Migration("20221213094431_availtableascore")]
+    partial class availtableascore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,14 +99,11 @@ namespace BSTableBooking.Migrations
 
             modelBuilder.Entity("BSTableBooking.Models.AvailTables", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("SessionID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BookDay")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Session")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .HasColumnType("datetime2");
@@ -114,21 +111,32 @@ namespace BSTableBooking.Migrations
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "BookDay", "Session");
+                    b.Property<string>("SessionSlot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasKey("SessionID");
 
                     b.ToTable("AvailTables");
                 });
 
             modelBuilder.Entity("BSTableBooking.Models.Booking", b =>
                 {
-                    b.Property<int>("OrderID")
+                    b.Property<int>("BookingID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingID"), 1L, 1);
+
+                    b.Property<int>("AvailTablesSessionID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("BookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BookingDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("BookingDuration")
                         .HasColumnType("int");
@@ -148,81 +156,74 @@ namespace BSTableBooking.Migrations
                     b.Property<string>("BookingStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderID");
+                    b.Property<int?>("SessionID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ProductID");
+                    b.HasKey("BookingID");
+
+                    b.HasIndex("AvailTablesSessionID");
 
                     b.ToTable("Booking");
                 });
 
-            modelBuilder.Entity("BSTableBooking.Models.BookingInfo", b =>
+            modelBuilder.Entity("BSTableBooking.Models.Session", b =>
                 {
-                    b.Property<int>("ProuctId")
+                    b.Property<int>("SessionID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProuctId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SessionID"), 1L, 1);
 
                     b.Property<string>("BookingSession")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
+                    b.Property<string>("SessionDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("SessionEndTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SessionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TableAreaID")
+                        .HasColumnType("int");
 
                     b.Property<string>("TableLocation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProuctId");
+                    b.HasKey("SessionID");
 
-                    b.HasIndex("CategoryID");
+                    b.HasIndex("TableAreaID");
 
-                    b.ToTable("BookingInfo");
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("BSTableBooking.Models.TableArea", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("TableAreaID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TableAreaID"), 1L, 1);
 
-                    b.Property<string>("CategoryDescription")
+                    b.Property<string>("TableAreaDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("TableAreaName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("TableAreaID");
 
                     b.ToTable("TableArea");
                 });
@@ -362,35 +363,33 @@ namespace BSTableBooking.Migrations
 
             modelBuilder.Entity("BSTableBooking.Models.AvailTables", b =>
                 {
-                    b.HasOne("BSTableBooking.Models.BookingInfo", "Product")
-                        .WithOne("Stock")
-                        .HasForeignKey("BSTableBooking.Models.AvailTables", "ProductId")
+                    b.HasOne("BSTableBooking.Models.Session", "AvailSession")
+                        .WithOne("FreeTables")
+                        .HasForeignKey("BSTableBooking.Models.AvailTables", "SessionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("AvailSession");
                 });
 
             modelBuilder.Entity("BSTableBooking.Models.Booking", b =>
                 {
-                    b.HasOne("BSTableBooking.Models.BookingInfo", "Product")
-                        .WithMany("Order")
-                        .HasForeignKey("ProductID")
+                    b.HasOne("BSTableBooking.Models.AvailTables", "AvailTables")
+                        .WithMany()
+                        .HasForeignKey("AvailTablesSessionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("AvailTables");
                 });
 
-            modelBuilder.Entity("BSTableBooking.Models.BookingInfo", b =>
+            modelBuilder.Entity("BSTableBooking.Models.Session", b =>
                 {
-                    b.HasOne("BSTableBooking.Models.TableArea", "Category")
-                        .WithMany("Product")
-                        .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("BSTableBooking.Models.TableArea", "TableArea")
+                        .WithMany("Session")
+                        .HasForeignKey("TableAreaID");
 
-                    b.Navigation("Category");
+                    b.Navigation("TableArea");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -444,17 +443,14 @@ namespace BSTableBooking.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BSTableBooking.Models.BookingInfo", b =>
+            modelBuilder.Entity("BSTableBooking.Models.Session", b =>
                 {
-                    b.Navigation("Order");
-
-                    b.Navigation("Stock")
-                        .IsRequired();
+                    b.Navigation("FreeTables");
                 });
 
             modelBuilder.Entity("BSTableBooking.Models.TableArea", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }

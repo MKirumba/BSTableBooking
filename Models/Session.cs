@@ -1,40 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BSTableBooking.Models
 {
-    public class BookingInfo
+    public class Session
     {
         [Key]
-        public int ProuctId { get; set; }
+        public int SessionID { get; set; }
         [Required]
         [DisplayName("Session Name")]
-        public string ProductName { get; set; }
+        public string SessionName { get; set; }
         [Required]
         [DisplayName("Session Description")]
-        public string ProductDescription { get; set; }
+        public string SessionDescription { get; set; }
         [Required]
         [DisplayName("Seats Capacity")]
         public int Qty { get; set; }
 
-        public int CategoryID { get; set; }
+        public int? TableAreaID { get; set; }
 
-        public TableArea Category { get; set; }
-        public AvailTables Stock { get; set; }
-        public List<Booking> Order { get; set; } = new List<Booking>();
+        public TableArea? TableArea { get; set; }
+        public AvailTables? FreeTables { get; set; }
 
+        //[ForeignKey("BookingID")]
+        //public Booking BookedID { get; set; }
+
+        //public Booking Booked { get; set; }
 
 
         [NotMapped]
         [Required]
-        public int Categories { get; set; }
+        public int TableAreas { get; set; }
         [NotMapped]
-        public IEnumerable<SelectListItem>? CategoryList { get; set; }
+        public virtual IEnumerable<SelectListItem>? TableAreaList { get; set; }
+        
         [NotMapped]
-        public string? CategoryNames { get; set; }
+        public string? TableAreaNames { get; set; }
         [NotMapped]
 
 
@@ -55,7 +60,7 @@ namespace BSTableBooking.Models
         public string? BookingSession { get; set; }
         [Required]
         [DisplayName("Seating Location")]
-        public string TableLocation { get; set; }
+        public string? TableLocation { get; set; }
 
 
 

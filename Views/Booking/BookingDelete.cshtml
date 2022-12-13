@@ -1,20 +1,20 @@
 ﻿@model BSTableBooking.Models.Booking
 
-<h1>Product</h1>
+<h1>Session</h1>
 <form method="post" asp-action="BookingDelete">
-    <input type="hidden" asp-for="OrderID" />
-    <div class="border p-3 mt-4">
+    <input type="hidden" asp-for="BookingID" />
+    <div class="bBooking p-3 mt-4">
         <div class="row pb-2">
-            <h1 class="text-primary">Delete Product</h1>
+            <h1 class="text-primary">Delete Session</h1>
         </div>
         <div class="mb-2">
             <label>Booking Name</label>
-            <input asp-for="OrderDescription" disabled class="form-control" />
+            <input asp-for="BookingDescription" disabled class="form-control" />
         </div>
         <div class="mb3">
             
-            <label>Order Date</label>
-            <input asp-for="OrderDate" disabled class="form-control" />
+            <label>Booking Date</label>
+            <input asp-for="BookingDate" disabled class="form-control" />
         </div>
         <br />
         <div class="mb3">
@@ -37,16 +37,16 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderDate)
+            @Html.DisplayNameFor(model => model.BookingDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OrderDate)
+            @Html.DisplayFor(model => model.BookingDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderDescription)
+            @Html.DisplayNameFor(model => model.BookingDescription)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OrderDescription)
+            @Html.DisplayFor(model => model.BookingDescription)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Qty)
@@ -55,10 +55,10 @@
             @Html.DisplayFor(model => model.Qty)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Product)
+            @Html.DisplayNameFor(model => model.Session)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Product.ProductDescription)
+            @Html.DisplayFor(model => model.Session.SessionDescription)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BookingStartTime)
@@ -99,7 +99,7 @@
     </dl>
     
     <form asp-action="BookingDelete">
-        <input type="hidden" asp-for="OrderID" />
+        <input type="hidden" asp-for="BookingID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

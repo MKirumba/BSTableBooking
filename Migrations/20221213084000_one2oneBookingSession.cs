@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BSTableBooking.Migrations
 {
-    public partial class initCreate : Migration
+    public partial class one2oneBookingSession : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,17 +51,39 @@ namespace BSTableBooking.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TableArea",
+                name: "Booking",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    BookingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    SessionID = table.Column<int>(type: "int", nullable: true),
+                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookingDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Qty = table.Column<int>(type: "int", nullable: false),
+                    BookingStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookingEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookingDuration = table.Column<int>(type: "int", nullable: false),
+                    BookingSource = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TableArea", x => x.CategoryId);
+                    table.PrimaryKey("PK_Booking", x => x.BookingID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TableArea",
+                columns: table => new
+                {
+                    TableAreaID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TableAreaName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TableAreaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TableArea", x => x.TableAreaID);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,67 +193,54 @@ namespace BSTableBooking.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookingInfo",
+                name: "Session",
                 columns: table => new
                 {
-                    ProuctId = table.Column<int>(type: "int", nullable: false)
+                    SessionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitPrice = table.Column<double>(type: "float", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                    SessionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SessionDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Qty = table.Column<int>(type: "int", nullable: false),
+                    TableAreaID = table.Column<int>(type: "int", nullable: true),
+                    BookingID = table.Column<int>(type: "int", nullable: false),
+                    SessionEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookingSession = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TableLocation = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookingInfo", x => x.ProuctId);
+                    table.PrimaryKey("PK_Session", x => x.SessionID);
                     table.ForeignKey(
-                        name: "FK_BookingInfo_TableArea_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "TableArea",
-                        principalColumn: "CategoryId",
+                        name: "FK_Session_Booking_BookingID",
+                        column: x => x.BookingID,
+                        principalTable: "Booking",
+                        principalColumn: "BookingID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Session_TableArea_TableAreaID",
+                        column: x => x.TableAreaID,
+                        principalTable: "TableArea",
+                        principalColumn: "TableAreaID");
                 });
 
             migrationBuilder.CreateTable(
                 name: "AvailTables",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    SessionID = table.Column<int>(type: "int", nullable: false),
                     Qty = table.Column<int>(type: "int", nullable: false),
-                    LastUpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    LastUpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SessionSlot = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvailTables", x => x.ProductId);
+                    table.PrimaryKey("PK_AvailTables", x => x.SessionID);
                     table.ForeignKey(
-                        name: "FK_AvailTables_BookingInfo_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "BookingInfo",
-                        principalColumn: "ProuctId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Booking",
-                columns: table => new
-                {
-                    OrderID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductID = table.Column<int>(type: "int", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qty = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Booking", x => x.OrderID);
-                    table.ForeignKey(
-                        name: "FK_Booking_BookingInfo_ProductID",
-                        column: x => x.ProductID,
-                        principalTable: "BookingInfo",
-                        principalColumn: "ProuctId",
+                        name: "FK_AvailTables_Session_SessionID",
+                        column: x => x.SessionID,
+                        principalTable: "Session",
+                        principalColumn: "SessionID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -275,14 +284,15 @@ namespace BSTableBooking.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_ProductID",
-                table: "Booking",
-                column: "ProductID");
+                name: "IX_Session_BookingID",
+                table: "Session",
+                column: "BookingID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookingInfo_CategoryID",
-                table: "BookingInfo",
-                column: "CategoryID");
+                name: "IX_Session_TableAreaID",
+                table: "Session",
+                column: "TableAreaID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -306,16 +316,16 @@ namespace BSTableBooking.Migrations
                 name: "AvailTables");
 
             migrationBuilder.DropTable(
-                name: "Booking");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "BookingInfo");
+                name: "Session");
+
+            migrationBuilder.DropTable(
+                name: "Booking");
 
             migrationBuilder.DropTable(
                 name: "TableArea");

@@ -25,18 +25,19 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="ProductList">Make a Booking</a>
+                            <a class="nav-link" asp-area="" asp-controller="Session" asp-action="SessionList">Make a Booking</a>
                         </li>
-
+                      
                         @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="User" asp-action="CreateUser">Create User</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="BookingInfo" asp-action="Index">Session Settings</a>
+                                <a class="nav-link" asp-area="" asp-controller="Session" asp-action="Index">Session Settings</a>
                 </li>
             }
+                       
                         @if (User.IsInRole("admin") || (User.IsInRole("staff")))
             {
             <li class="nav-item">
@@ -81,7 +82,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="bBooking-top footer text-muted">
         <div class="container">
             &copy; 2022 - Bean Scene Table Booking- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

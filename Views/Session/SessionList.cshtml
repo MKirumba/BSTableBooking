@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BSTableBooking.Models.BookingInfo>
+﻿@model IEnumerable<BSTableBooking.Models.Session>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,10 +15,10 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.ProductName)
+                        @Html.DisplayNameFor(model => model.SessionName)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ProductDescription)
+                        @Html.DisplayNameFor(model => model.SessionDescription)
                     </th>
 
                     <th>
@@ -43,10 +43,10 @@
                 {
                     <tr>
                         <td width="20%">
-                            @Html.DisplayFor(modelItem => item.ProductName)
+                            @Html.DisplayFor(modelItem => item.SessionName)
                         </td>
                         <td width="20%">
-                            @Html.DisplayFor(modelItem => item.ProductDescription)
+                            @Html.DisplayFor(modelItem => item.SessionDescription)
                         </td>
                         <td width="20%">
                             @Html.DisplayFor(modelItem => item.SessionStartTime)
@@ -62,7 +62,7 @@
 
 
             <td>
-                    <a asp-controller="Booking" asp-action="CreateOrder" asp-route-id="@item.ProuctId" asp-route-qty="@item.Qty" asp-route-bookday="@item.SessionEndTime" asp-route-sessiontime="@item.BookingSession" class="btn btn-outline-primary mx-3">Order</a>
+                    <a asp-controller="Booking" asp-action="CreateBooking" asp-route-id="@item.SessionID" asp-route-qty="@item.Qty" asp-route-bookday="@item.SessionEndTime" asp-route-sessiontime="@item.BookingSession" class="btn btn-outline-primary mx-3">Booking</a>
             </td>
         </tr>
 }

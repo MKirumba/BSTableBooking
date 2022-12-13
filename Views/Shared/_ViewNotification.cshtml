@@ -12,3 +12,8 @@
 {
     <h5 class="text-sm-end btn btn-outline-primary mx-3">@TempData["success"]</h5>
 }
+
+@if (TempData["noseats"] != null)
+{
+    <h2 class="text-bg-danger btn btn-outline-primary mx-3">@TempData["noseats"]</h2>
+}

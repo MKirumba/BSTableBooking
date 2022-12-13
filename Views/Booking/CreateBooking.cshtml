@@ -1,9 +1,9 @@
 ﻿@model Booking;
 
 @{
-    //ViewData["Title"] = "Create";
+    
     var session = ViewData["SessionInfo"]
-    as BSTableBooking.Models.BookingInfo;
+    as BSTableBooking.Models.Session;
     var tablelocation = ViewData["TableLocation"] as BSTableBooking.Models.TableArea;
     var availtable = ViewData["available"] as BSTableBooking.Models.AvailTables;
 
@@ -14,48 +14,71 @@
 <hr />
 <div class="row g-3">
     <div class="col">
-        <form id="ProductDetails" asp-action="CreateOrder">
-            <input asp-for="ProductID" value=@session.ProuctId hidden class="form-control" />
+        <form id="SessionDetails" asp-action="CreateBooking">
+            <input asp-for="SessionID" value=@session.SessionID hidden class="form-control" />
 
             <div class="row justify-content-evenly">
-                    <div class="form-group col-md-4">
-                        <label asp-for=@session.ProductName class="control-label"></label>
-                        <input asp-for=@session.ProductName readonly class ="form-control" />
+                    <div class="form-group col-md-3 ">
+                        <label asp-for=@session.SessionName class="control-label"></label>
+                    <input asp-for=@session.SessionName readonly class="form-control bg-light " />
                     
                     </div>
-            <div class="form-group col-md-4">
-                    <label asp-for=@session.ProductDescription class="control-label"></label>
-                    <input asp-for=@session.ProductDescription readonly class="form-control" />
-                </div>
-                </div>
-
-            <div class="row justify-content-evenly">
-                <div class="form-group col-md-4">
-                    <label asp-for=@tablelocation.CategoryName class="control-label"></label>
-                    <input asp-for=@tablelocation.CategoryName readonly class="form-control" />
+ 
+                <div class="form-group col-md-3">
+                    <label asp-for=@session.TableLocation class="control-label"></label>
+                    <input asp-for=@session.TableLocation readonly class="form-control bg-light" />
 
                 </div>
+                <div class="form-group col-md-3">
+                    <label asp-for=@session.SessionDescription class="control-label"></label>
+                    <input asp-for=@session.SessionDescription readonly class="form-control bg-light" />
+
+                </div>
+
+
+                </div>
+                   <div class="row justify-content-evenly">
                 <div class="form-group col-md-4">
                     <label asp-for=@session.Qty class="control-label"></label>
-                    <input asp-for=@session.Qty type="text" readonly class="form-control" />
+                    <input asp-for=@session.Qty type="text" readonly class="form-control bg-light" />
+                </div>
+            
+   
+      
+                     <div class="form-group col-md-4">
+                    <label asp-for=@session.BookingSession class="control-label"></label>
+                    <input asp-for=@session.BookingSession readonly class="form-control bg-light" />
                 </div>
             </div>
 
+       
+
             <div class="row justify-content-evenly">
                 <div class="form-group col-md-4">
-                    <label asp-for="OrderDescription" class="control-label"></label>
-                    <input asp-for="OrderDescription" class="form-control" />
-                    <span asp-validation-for="OrderDescription" class="text-danger"></span>
+   
+                        <label asp-for="BookingDescription" class="control-label"></label>
+                        <input asp-for="BookingDescription" inputtype="numeric" class="form-control" />
+                        <span asp-validation-for="BookingDescription" class="text-danger"></span>
+                    </div>
+                      
+
+                    <div class="form-group col-md-4">
+                        <label asp-for="BookingDate" class="control-label"></label>
+                        <input asp-for="BookingDate" inputtype="numeric" class="form-control" />
+                        <span asp-validation-for="BookingDate" class="text-danger"></span>
+                    </div>
                 </div>
+              
+
+            <div class="row justify-content-evenly">
 
                 <div class="form-group col-md-4">
                     <label asp-for="Qty" class="control-label"></label>
                     <input asp-for="Qty" inputtype = "numeric" class="form-control" />
                     <span asp-validation-for="Qty" class="text-danger"></span>
                 </div>
-                </div>
+             
                
-                <div class="row justify-content-evenly">
                     <div class="form-group col-md-4">
                         <div class="form-group">
                             <label asp-for="BookingDuration"  class="form-label mt-4">Booking Duration</label>
@@ -70,6 +93,7 @@
                             </select>
                             <span asp-validation-for="BookingDuration" class="text-danger"></span>
                         </div>
+                    </div>
                     </div>
                    
                 <div class="row justify-content-evenly">
@@ -98,7 +122,10 @@
                         <span asp-validation-for="BookingSource" class="text-danger"></span>
                     </div>
                     </div>
-                    </div>
+                   
+                  
+               
+
 
                     @*Only for Admin and Staff View*@
             @if (User.IsInRole("admin") || User.IsInRole("staff"))
@@ -107,7 +134,7 @@
                 <div class="row justify-content-evenly">
                     <div class="form-group col-md-4">
                         <div class="form-group">
-                            <label asp-for="BookingStatus" class="form-label mt-4">Booking StatusArea</label>
+                            <label asp-for="BookingStatus" class="form-label mt-4">Booking Status</label>
                             <select class="form-select" asp-for="BookingStatus">
                                 <option>Pending</option>
                                 <option>Confirmed</option>
@@ -126,7 +153,7 @@
         <br />
         <div>
         <button type="submit" class="btn btn-primary">Submit</button>
-        <a asp-controller="BookingInfo" asp-action="ProductList" class="btn btn-primary">Back To List</a>
+        <a asp-controller="Booking" asp-action="BookList" class="btn btn-primary">Back To List</a>
     
 
             </div>

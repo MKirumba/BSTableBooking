@@ -22,6 +22,30 @@ namespace BSTableBooking.Services
             Db.Booking.Add(P);
             Db.SaveChanges();
         }
+
+        public void UpdateBooking(Booking P)
+        {
+
+            Db.Booking.Update(P);
+            Db.SaveChanges();
+        }
+
+        public void DeleteBooking(Booking P)
+        {
+
+            Db.Booking.Remove(P);
+            Db.SaveChanges();
+        }
+
+
+
+
+        public IQueryable<Booking> List()
+        {
+            var data = Db.Booking.AsQueryable();
+            return data;
+        }
+
     }
 }
 
