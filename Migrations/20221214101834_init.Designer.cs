@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    [Migration("20221213085642_init")]
+    [Migration("20221214101834_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,18 +102,8 @@ namespace BSTableBooking.Migrations
                     b.Property<int>("SessionID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BookDay")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Qty")
                         .HasColumnType("int");
-
-                    b.Property<string>("SessionSlot")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SessionID");
 
@@ -135,10 +125,10 @@ namespace BSTableBooking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BookingDuration")
+                    b.Property<int?>("BookingDuration")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BookingEndTime")
+                    b.Property<DateTime?>("BookingEndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BookingNotes")
@@ -147,7 +137,7 @@ namespace BSTableBooking.Migrations
                     b.Property<string>("BookingSource")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BookingStartTime")
+                    b.Property<DateTime?>("BookingStartTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BookingStatus")
@@ -161,6 +151,10 @@ namespace BSTableBooking.Migrations
 
                     b.HasKey("BookingID");
 
+                    b.HasIndex("SessionID")
+                        .IsUnique()
+                        .HasFilter("[SessionID] IS NOT NULL");
+
                     b.ToTable("Booking");
                 });
 
@@ -171,9 +165,6 @@ namespace BSTableBooking.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SessionID"), 1L, 1);
-
-                    b.Property<int>("BookingID")
-                        .HasColumnType("int");
 
                     b.Property<string>("BookingSession")
                         .HasColumnType("nvarchar(max)");
@@ -200,9 +191,6 @@ namespace BSTableBooking.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SessionID");
-
-                    b.HasIndex("BookingID")
-                        .IsUnique();
 
                     b.HasIndex("TableAreaID");
 
@@ -373,19 +361,20 @@ namespace BSTableBooking.Migrations
                     b.Navigation("AvailSession");
                 });
 
+            modelBuilder.Entity("BSTableBooking.Models.Booking", b =>
+                {
+                    b.HasOne("BSTableBooking.Models.AvailTables", "Session")
+                        .WithOne("Booking")
+                        .HasForeignKey("BSTableBooking.Models.Booking", "SessionID");
+
+                    b.Navigation("Session");
+                });
+
             modelBuilder.Entity("BSTableBooking.Models.Session", b =>
                 {
-                    b.HasOne("BSTableBooking.Models.Booking", "BookedID")
-                        .WithOne("Session")
-                        .HasForeignKey("BSTableBooking.Models.Session", "BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BSTableBooking.Models.TableArea", "TableArea")
                         .WithMany("Session")
                         .HasForeignKey("TableAreaID");
-
-                    b.Navigation("BookedID");
 
                     b.Navigation("TableArea");
                 });
@@ -441,9 +430,9 @@ namespace BSTableBooking.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BSTableBooking.Models.Booking", b =>
+            modelBuilder.Entity("BSTableBooking.Models.AvailTables", b =>
                 {
-                    b.Navigation("Session")
+                    b.Navigation("Booking")
                         .IsRequired();
                 });
 

@@ -26,7 +26,7 @@ namespace BSTableBooking.Data
         //    //    .HasKey(c => new { c.SessionId, c.BookDay, c.SessionSlot });
 
         //    //modelBuilder.Entity<Session>()
-        //    //    .HasMany(a => a.SessionID)
+        //    //    .HasMany(a => a.Session)
         //    //    .WithRequired(p => p. 
         //    //    .HasForeignKey(p => new { c.SessionId, c.BookDay, c.Session });
 

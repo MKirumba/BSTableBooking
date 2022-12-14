@@ -60,6 +60,19 @@ namespace BSTableBooking.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateBooking(Booking Pobj)
         {
+             
+            //var sessionexists = DB.AvailTables.Find(Pobj.avSessionID.SessionID);
+
+            //if (sessionexists != null)
+            //{
+             
+            //    sessionexists.Qty = sessionexists.Qty -  Pobj.Qty;
+            
+            //    DB.AvailTables.Update(sessionexists);
+            //    DB.SaveChanges();
+            //}
+
+
             using (var transaction = DB.Database.BeginTransaction())
             {
                 try
@@ -80,49 +93,68 @@ namespace BSTableBooking.Controllers
 
             }
 
-            var booking = new Booking();
-            booking.BookingID = Pobj.BookingID;
-          
-            var sessionexists = DB.AvailTables.Find(Pobj.BookingID);
-            var sessionFormDb = DB.Session.Find(Pobj.BookingID);
+            //var sessionexists = DB.AvailTables.Find(Pobj.SessionID);
+
+            //if (sessionexists != null)
+            //{
+            //    var bksession = new AvailTables()
+            //    {
+            //        SessionID = sessionexists.SessionID,
+               
+            //        Qty = Pobj.Qty,
+
+            //    };
+            //    DB.AvailTables.Add(bksession);
+            //    DB.SaveChanges();
+            //}
 
 
-            /// Check for session information///
-
-            if (sessionexists != null)
-            {
 
 
-                sessionexists.Qty = sessionexists.Qty - Pobj.Qty;
+            //var booking = new Booking();
+            ////booking.BookingID = Pobj.BookingID;
 
-                if (sessionexists.Qty < 0)
-                {
-
-                    TempData["noseats"] = "No available seat for session. Please call to be on waiting list";
-                    return RedirectToAction("SessionList", "Session");
+            //var sessionexists = DB.AvailTables.Find(Pobj.BookingID);
+            //var sessionFormDb = DB.Session.Find(Pobj.SessionID);
 
 
-                }
+            ///// Check for session information///
 
-                DB.AvailTables.Update(sessionexists);
-                DB.SaveChanges();
+            //if (sessionexists != null)
+            //{
 
-            }
-            if (sessionexists == null)
-            {
-                var bksession = new AvailTables()
-                {
-                    //SessionID = (int)Pobj.SessionID,
-                    SessionID = Pobj.BookingID,
-                    BookDay = Pobj.BookingEndTime,
-                    SessionSlot = sessionFormDb.BookingSession,
-                    Qty = sessionFormDb.Qty,
 
-                };
-                DB.AvailTables.Add(bksession);
-                DB.SaveChanges();
+            //    sessionexists.Qty = sessionexists.Qty - Pobj.Qty;
 
-            }
+            //    if (sessionexists.Qty < 0)
+            //    {
+
+            //        TempData["noseats"] = "No available seat for session. Please call to be on waiting list";
+            //        return RedirectToAction("SessionList", "Session");
+
+
+            //    }
+
+            //    DB.AvailTables.Update(sessionexists);
+            //    DB.SaveChanges();
+
+            //}
+            //if (sessionexists == null)
+            //{
+            //    var bksession = new AvailTables()
+            //    {
+
+            //        BookingID = Pobj.BookingID,
+            //        Qty = sessionFormDb.Qty,
+            //        SessionID = sessionFormDb.SessionID
+
+
+            //    };
+            //    DB.AvailTables.Add(bksession);
+            //    DB.SaveChanges();
+
+            //}
+
 
             return RedirectToAction("BookingList");
 
@@ -172,10 +204,10 @@ namespace BSTableBooking.Controllers
 
             var sessionFormDb = DB.Session
                // .Find(Pobj.Session.SessionID);
-                    .Find(Pobj.SessionID);
+                    .Find(Pobj.Session);
             var sessionexists = DB.AvailTables
                 //.Find(Pobj.Session.SessionID);
-                    .Find(Pobj.SessionID);
+                    .Find(Pobj.Session);
             /// Check for session information///
 
             if (sessionexists != null)
@@ -203,8 +235,6 @@ namespace BSTableBooking.Controllers
                 {
                     //SessionID = (int)Pobj.Session.SessionID,
                     SessionID = sessionFormDb.SessionID,
-                    BookDay = Pobj.BookingEndTime,
-                    SessionSlot = sessionFormDb.BookingSession,
                     Qty = sessionFormDb.Qty,
 
                 };

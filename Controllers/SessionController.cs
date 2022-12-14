@@ -10,26 +10,26 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BSTableBooking.Controllers
 {
-   
+
     public class SessionController : Controller
     {
         BSTableBookingAppDbContext DB;
         ISessionServices IPservices;
         ITableAreaService ICService;
 
-        public SessionController( BSTableBookingAppDbContext _Db, ITableAreaService _TableAreaservices, ISessionServices _IPservices)
+        public SessionController(BSTableBookingAppDbContext _Db, ITableAreaService _TableAreaservices, ISessionServices _IPservices)
         {
-            ICService= _TableAreaservices;
+            ICService = _TableAreaservices;
             IPservices = _IPservices;
             DB = _Db;
 
         }
 
-        
+
         public IActionResult Index()
         {
 
-          return View(IPservices.GetAllSessions());
+            return View(IPservices.GetAllSessions());
         }
 
         public IActionResult SessionList()
@@ -37,55 +37,52 @@ namespace BSTableBooking.Controllers
             return View(IPservices.GetAllSessions());
         }
 
-        //public IActionResult Booking(int? id)
-        //{
-        //    if (id == null || id == 0)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var TableAreaFormDb = DB.Session.Find(id);
-        //    if (TableAreaFormDb == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(TableAreaFormDb);
-        //}
-
-        // display create view
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             var model = new Session();
 
-            //model.TableAreaList = new List<string>() { "Main", "Oustide", "Main" };
             model.TableAreaList = ICService.List().Select(a => new SelectListItem { Text = a.TableAreaName, Value = a.TableAreaID.ToString() });
 
 
             return View(model);
-          
-          
+
+
         }
 
-        // save new Session
-        //post
+
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Session Pobj)
         {
 
-            Pobj.TableAreaID = Pobj.TableAreas;
             var Tablearea = DB.TableArea.Find(Pobj.TableAreaID);
-            Pobj.TableLocation = Tablearea.TableAreaName;
 
+
+            if (Tablearea == null)
+            {
+                var tableloc = new TableArea
+                {
+
+                    TableAreaName = Pobj.TableLocation,
+                    TableAreaDescription = Pobj.TableLocation
+                };
+                DB.TableArea.Add(tableloc);
+                DB.SaveChanges();
+
+                Pobj.TableAreaID = tableloc.TableAreaID;
+
+            }
 
 
             using (var transaction = DB.Database.BeginTransaction())
             {
                 try
                 {
-                    
+
                     IPservices.CreateSession(Pobj);
 
                     transaction.Commit();
@@ -93,39 +90,48 @@ namespace BSTableBooking.Controllers
                 }
                 catch (Exception ex)
                 {
-                    
+
                     transaction.Rollback();
                 }
 
-                //DB.SaveChanges();
-              
-                return RedirectToAction("Index");
+                var availtab = new AvailTables
+                {
+                    SessionID = Pobj.SessionID,
 
+                    Qty = Pobj.Qty,
+                };
+                DB.AvailTables.Add(availtab);
+                DB.SaveChanges();
 
             }
+
+            return RedirectToAction("Index");
+
+
         }
 
+
         // display Edit view
-       [Authorize(Roles = "admin")]
-            public IActionResult Edit(int? id)
+        [Authorize(Roles = "admin")]
+        public IActionResult Edit(int? id)
         {
-            if(id==null || id==0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            
+
             var TableAreaFormDb = DB.Session.Find(id);
-            var Tablearea = DB.TableArea.Find(TableAreaFormDb.TableAreaID);
-            TableAreaFormDb.TableLocation = Tablearea.TableAreaName;
+            //   var Tablearea = DB.TableArea.Find(TableAreaFormDb.TableAreaID);
+            //  TableAreaFormDb.TableLocation = Tablearea.TableAreaName;
 
-            if (TableAreaFormDb==null)
+            if (TableAreaFormDb == null)
             {
                 return NotFound();
             }
-            //new List<string>() { "Main", "Oustide", "Main" };
 
-            TableAreaFormDb.TableAreaList = ICService.List()
-                .Select(a => new SelectListItem { Text = a.TableAreaName, Value = a.TableAreaID.ToString() });
+
+            //   TableAreaFormDb.TableAreaList = ICService.List()
+            //     .Select(a => new SelectListItem { Text = a.TableAreaName, Value = a.TableAreaID.ToString() });
 
             return View(TableAreaFormDb);
         }
@@ -138,29 +144,35 @@ namespace BSTableBooking.Controllers
 
         public IActionResult Edit(Session Pobj)
         {
-            Pobj.TableAreaID = Pobj.TableAreas;
-            var Tablearea = DB.TableArea.Find(Pobj.TableAreaID);
-            Pobj.TableLocation = Tablearea.TableAreaName;
 
             DB.Session.Update(Pobj);
             DB.SaveChanges();
 
+            var tableloc = new TableArea
+            {
+
+                TableAreaName = Pobj.TableLocation,
+                TableAreaDescription = Pobj.TableLocation
+            };
+
+            DB.TableArea.Update(tableloc);
+
             TempData["success"] = "Session Updated Successfully";
+         
+
+            var availtable = DB.AvailTables.Find(Pobj.SessionID);
+                
+            availtable.SessionID = Pobj.SessionID;
+            availtable.Qty = Pobj.Qty;
+            DB.AvailTables.Update(availtable);
+            DB.SaveChanges();
+
             return RedirectToAction("Index");
 
         }
-            //var availcap = new AvailTables
-            //{
-            //    BookingSessionID = Pobj.
-            //    SessionId = Pobj.SessionID,
-            //    Qty = Pobj.Qty,
-            //    SessionSlot = Pobj.BookingSession,
-            //    BookDay = Pobj.SessionEndTime,
-            //    LastUpdatedDate = DateTime.Now,
 
-        // display Delete view
 
-        [Authorize(Roles = "admin")]
+            [Authorize(Roles = "admin")]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)

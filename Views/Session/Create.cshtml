@@ -7,41 +7,40 @@
         <div class="row pb-2">
             <h1 class="text-primary">Create Session</h1>
         </div>
-        <div class="mb-2">
+
+        <div class="row justify-content-evenly">
+            <div class="form-group col-md-4">
             <label>Session Name</label>
             <input asp-for="SessionName" class="form-control" />
             <span asp-validation-for="SessionName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+       
+            <div class="form-group col-md-4">
             <label >Session Description</label>
             <input asp-for="SessionDescription" class="form-control"/>
         </div>
-        <br />
-        <div class="mb3">
+        </div>
+
+        <div class="row justify-content-evenly">
+        <div class="form-group col-md-4">
+           
 
             <label>Session Start Date</label>
             <input asp-for="SessionStartTime" class="form-control" />
             <span asp-validation-for="SessionStartTime" class="text-danger"></span>
+            </div>
+                <div class="form-group col-md-4">
 
-        </div>
-        <br />
+                    <label>Session End Date</label>
+                    <input asp-for="SessionEndTime" class="form-control" />
+                    <span asp-validation-for="SessionEndTime" class="text-danger"></span>
+                    </div>
+                    </div>
 
-        <div class="mb3">
 
-            <label>Seating Capacity</label>
-            <input asp-for="Qty" class="form-control" />
-            <span asp-validation-for="Qty" class="text-danger"></span>
-
-        </div>
-        <br />
-        <div class="mb3">
-
-            <label>Session End Date</label>
-            <input asp-for="SessionEndTime" class="form-control" />
-            <span asp-validation-for="SessionEndTime" class="text-danger"></span>
-
-        </div>
-        <div class="row justify-content-evenly">
+            <div class="row justify-content-evenly">
+  
+ 
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label asp-for="BookingSession" class="form-label mt-4">Session Time</label>
@@ -53,16 +52,51 @@
                 <span asp-validation-for="BookingSession" class="text-danger"></span>
             </div>
         </div>
-        <br />
-            <div class="form-group col-md-6">
+
+
+
+
+
+
+@*            <div class="form-group col-md-4">
                 <div class="form-group">
-                <label asp-for="TableArea" class="form-label mt-4">Table Area </label>
-            <select asp-items="Model.TableAreaList" class="form-select" asp-for="TableAreas">           
-                </select>
+                    <label asp-for="TableArea" class="form-label mt-4">Table Area </label>
+                    <select asp-items="Model.TableAreaList" class="form-select" asp-for="TableAreas">
+                    </select>
                     <span asp-validation-for="TableArea" class="text-danger"></span>
+                </div>*@
+
+        </div>
+        
+  
             </div>
+            <div class="row justify-content-md-evenly ">
+  
+        <div class="form-group col-md-4">
+
+            <label>Seating Capacity</label>
+            <input asp-for="Qty" class="form-control" />
+            <span asp-validation-for="Qty" class="text-danger"></span>
+
+        </div>
+                <div class="form-group col-md-4">
+                <label asp-for="TableLocation" class="form-label mt-4">Table Area</label>
+                <select class="form-select" asp-for="TableLocation">
+                    <option>Main</option>
+                    <option>Balcony</option>
+                    <option>Outside</option> 
+                </select>
+                <span asp-validation-for="TableLocation" class="text-danger"></span>
             </div>
+
+
+
+
+        </div>
         <br />
+        <br />
+
+        
         <div class="row justify-content-lg-around">
             <div class="col-4">
                     <button type="submit" class="btn btn-primary">Create</button>

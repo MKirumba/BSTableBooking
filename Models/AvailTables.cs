@@ -11,8 +11,8 @@ namespace BSTableBooking.Models
 {
     public class AvailTables
     {
-        [Key]
-        public int SessionID { get; set; }
+        
+      
 
         //[Required]
         //[ForeignKey("BookingID")]
@@ -22,30 +22,17 @@ namespace BSTableBooking.Models
         [Required]
         [DisplayName("Available Seats")]
         public int Qty { get; set; }
-        public DateTime LastUpdatedDate { get; set; }= DateTime.Now;
 
-        // Check name change ref
-        // Dropped for namechange migration
+
+        //public DateTime LastUpdatedDate { get; set; }= DateTime.Now;
+
+
+        [Key]
+        public int SessionID { get; set; }
         public Session AvailSession { get; set; }
 
-        // Many to Many Bookings to AvailTables
-        //public List<Booking> BridgeBookingID { get; set; }
 
-        //One booking per session
-        [ForeignKey("SessionID")]
-        public Booking bkSessionID { get; set; }
-
-
-
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime BookDay { get; set; }
-
-        [Required]
-        public string SessionSlot { get; set; }
-
-
-
-
+        public Booking Booking { get; set; } 
+       
     }
 }
