@@ -62,7 +62,11 @@ namespace BSTableBooking.Models
         [DisplayName("Seating Location")]
         public string? TableLocation { get; set; }
 
+        [DisplayName("Cover Image")]
+        public string? Image { get; set; }
 
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
 
     }
 }

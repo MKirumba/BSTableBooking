@@ -13,12 +13,6 @@ namespace BSTableBooking.Models
     {
         
       
-
-        //[Required]
-        //[ForeignKey("BookingID")]
-        //public Booking Booked { get; set; }
-
-        // public int? SessionId { get; set; }
         [Required]
         [DisplayName("Available Seats")]
         public int Qty { get; set; }

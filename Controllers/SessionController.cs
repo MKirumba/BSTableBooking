@@ -16,13 +16,15 @@ namespace BSTableBooking.Controllers
         BSTableBookingAppDbContext DB;
         ISessionServices IPservices;
         ITableAreaService ICService;
+        IFileService IFservice;
 
-        public SessionController(BSTableBookingAppDbContext _Db, ITableAreaService _TableAreaservices, ISessionServices _IPservices)
+
+        public SessionController(BSTableBookingAppDbContext _Db, ITableAreaService _TableAreaservices, ISessionServices _IPservices, IFileService _IFservice)
         {
             ICService = _TableAreaservices;
             IPservices = _IPservices;
             DB = _Db;
-
+            IFservice = _IFservice;
         }
 
 
@@ -44,6 +46,8 @@ namespace BSTableBooking.Controllers
             var model = new Session();
 
             model.TableAreaList = ICService.List().Select(a => new SelectListItem { Text = a.TableAreaName, Value = a.TableAreaID.ToString() });
+
+
 
 
             return View(model);
@@ -77,7 +81,21 @@ namespace BSTableBooking.Controllers
 
             }
 
+            // Add Image
+            Pobj.Image = Pobj.ImageFile.FileName;
+            if (Pobj.ImageFile != null)
+            {
+                var fileReult = this.IFservice.SaveImage(Pobj.ImageFile);
+                if (fileReult.Item1 == 0)
+                {
+                    TempData["msg"] = "File could not saved";
+                    return View(Pobj);
+                }
+                var imageName = fileReult.Item2;
+                Pobj.Image = imageName;
+            }
 
+            // Update Database
             using (var transaction = DB.Database.BeginTransaction())
             {
                 try
@@ -104,6 +122,7 @@ namespace BSTableBooking.Controllers
                 DB.SaveChanges();
 
             }
+
 
             return RedirectToAction("Index");
 

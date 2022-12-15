@@ -43,6 +43,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.TableLocation)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+
+            </th>
 
            
         </tr>
@@ -70,7 +74,9 @@
                 <td width="20%">
                         @Html.DisplayFor(modelItem => item.TableLocation)
                 </td>
-
+                <td width="20%">
+                <img style="height:60px;width:80px" src="/Uploads/@item.Image" />
+                </td>
 
 
             <td class="row justify-content-evenly">
