@@ -21,7 +21,8 @@ namespace BSTableBooking.Models
 
 
         public int? SessionID { get; set; }
-        public AvailTables Session { get; set; }
+
+        public List<AvailTables> Session { get; set; }
 
 
      

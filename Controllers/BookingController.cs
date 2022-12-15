@@ -60,19 +60,29 @@ namespace BSTableBooking.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateBooking(Booking Pobj)
         {
-             
-            //var sessionexists = DB.AvailTables.Find(Pobj.avSessionID.SessionID);
 
-            //if (sessionexists != null)
-            //{
-             
-            //    sessionexists.Qty = sessionexists.Qty -  Pobj.Qty;
-            
-            //    DB.AvailTables.Update(sessionexists);
-            //    DB.SaveChanges();
-            //}
+            // Getting Session quantity info
+            var sessionexists = DB.AvailTables.Find(Pobj.SessionID);
+            Pobj.SessionID = sessionexists.SessionID;
+            if (sessionexists != null)
+            {
+
+                sessionexists.Qty = sessionexists.Qty - Pobj.Qty;
+
+                if (sessionexists.Qty < 0)
+                {
+
+                    TempData["noseats"] = "No available seat for session. Please call to be on waiting list";
+                    return RedirectToAction("SessionList", "Session");
 
 
+                }
+                // Updating Session quantity
+                DB.AvailTables.Update(sessionexists);
+                DB.SaveChanges();
+            }
+
+            /// Create Booking in database
             using (var transaction = DB.Database.BeginTransaction())
             {
                 try
@@ -92,70 +102,7 @@ namespace BSTableBooking.Controllers
                 }
 
             }
-
-            //var sessionexists = DB.AvailTables.Find(Pobj.SessionID);
-
-            //if (sessionexists != null)
-            //{
-            //    var bksession = new AvailTables()
-            //    {
-            //        SessionID = sessionexists.SessionID,
-               
-            //        Qty = Pobj.Qty,
-
-            //    };
-            //    DB.AvailTables.Add(bksession);
-            //    DB.SaveChanges();
-            //}
-
-
-
-
-            //var booking = new Booking();
-            ////booking.BookingID = Pobj.BookingID;
-
-            //var sessionexists = DB.AvailTables.Find(Pobj.BookingID);
-            //var sessionFormDb = DB.Session.Find(Pobj.SessionID);
-
-
-            ///// Check for session information///
-
-            //if (sessionexists != null)
-            //{
-
-
-            //    sessionexists.Qty = sessionexists.Qty - Pobj.Qty;
-
-            //    if (sessionexists.Qty < 0)
-            //    {
-
-            //        TempData["noseats"] = "No available seat for session. Please call to be on waiting list";
-            //        return RedirectToAction("SessionList", "Session");
-
-
-            //    }
-
-            //    DB.AvailTables.Update(sessionexists);
-            //    DB.SaveChanges();
-
-            //}
-            //if (sessionexists == null)
-            //{
-            //    var bksession = new AvailTables()
-            //    {
-
-            //        BookingID = Pobj.BookingID,
-            //        Qty = sessionFormDb.Qty,
-            //        SessionID = sessionFormDb.SessionID
-
-
-            //    };
-            //    DB.AvailTables.Add(bksession);
-            //    DB.SaveChanges();
-
-            //}
-
-
+  
             return RedirectToAction("BookingList");
 
         }
@@ -168,26 +115,21 @@ namespace BSTableBooking.Controllers
             {
                 return NotFound();
             }
-            
+
             var booking = DB.Booking.Find(id);
-
-            var sessionFormDb = DB.Session.Find(id);
-            var FreeTablesQty = DB.AvailTables.Find(booking.BookingID);
-            var tablearealocation = DB.TableArea.Find(sessionFormDb.TableAreaID);
-          
-
-            ViewData["SessionInfo"] = sessionFormDb;
-            ViewData["TableLocation"] = tablearealocation;
-            ViewData["available"] = FreeTablesQty;
 
 
             if (booking == null)
             {
                 return NotFound();
             }
+            
+            var sessionFormDb = DB.Session.Find(booking.SessionID);
+            var FreeTablesQty = DB.AvailTables.Find(booking.SessionID);
+    
+            ViewData["SessionInfo"] = sessionFormDb;
+            ViewData["available"] = FreeTablesQty;
 
-  
-          // TableAreaFormDb = IBservice.List().Select(a => new SelectListItem { Text = a. Value = a.TableArea.ToString() });
 
             return View(booking);
         }
@@ -198,63 +140,42 @@ namespace BSTableBooking.Controllers
 
         public IActionResult BookingEdit(Booking Pobj)
         {
-            var booking = new Booking();
+            var booking = DB.Booking.Find(Pobj.BookingID);
+            Pobj.SessionID = booking.SessionID;
 
-            booking.BookingID = Pobj.BookingID;
+            var sessionexists = DB.AvailTables.Find(Pobj.SessionID);
+            Pobj.SessionID = sessionexists.SessionID;
 
-            var sessionFormDb = DB.Session
-               // .Find(Pobj.Session.SessionID);
-                    .Find(Pobj.Session);
-            var sessionexists = DB.AvailTables
-                //.Find(Pobj.Session.SessionID);
-                    .Find(Pobj.Session);
             /// Check for session information///
 
-            if (sessionexists != null)
+            if (Pobj.Qty < sessionexists.Qty)
             {
-
-
                 sessionexists.Qty = sessionexists.Qty - Pobj.Qty;
 
-                if (sessionexists.Qty < 0)
-                {
+                    if (sessionexists.Qty < 0)
+                    {
 
-                    TempData["noseats"] = "No available seat for session. Please call to be on waiting list";
-                    return RedirectToAction("SessionList", "Session");
+                        TempData["noseats"] = "Not enough seats for change to session. Please call to be on waiting list";
+                        return RedirectToAction("SessionList", "Session");
 
-
-                }
+                    }
 
                 DB.AvailTables.Update(sessionexists);
                 DB.SaveChanges();
-
-            }
-            if (sessionexists == null)
-            {
-                var bksession = new AvailTables()
-                {
-                    //SessionID = (int)Pobj.Session.SessionID,
-                    SessionID = sessionFormDb.SessionID,
-                    Qty = sessionFormDb.Qty,
-
-                };
-                DB.AvailTables.Add(bksession);
-                DB.SaveChanges();
-
-            }
+                }
 
 
             using (var transaction = DB.Database.BeginTransaction())
             {
                 try
                 {
-                    //DeletePost(Pobj.Session.SessionID);
+                    DB.Booking.Remove(booking);
                     IBservice.UpdateBooking(Pobj);
 
                     transaction.Commit();
 
 
-                    TempData["success"] = "Booking Updated Successfully, your Booking Number is " + Pobj.BookingID
+                    TempData["success"] = "Booking Updated Successfully, your new booking number is " + Pobj.BookingID
                         + " Booking details have been sent to your email";
 
                 }

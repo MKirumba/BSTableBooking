@@ -17,7 +17,7 @@ namespace BSTableBooking.Data
         public DbSet<BSTableBooking.Models.TableArea> TableArea{ get; set; } = default!;
         public DbSet<BSTableBooking.Models.Booking> Booking { get; set; } = default!;
         public DbSet<BSTableBooking.Models.AvailTables> AvailTables { get; set; } = default!;
-         
+      
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

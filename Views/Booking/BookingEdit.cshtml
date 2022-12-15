@@ -4,7 +4,6 @@
     
     var session = ViewData["SessionInfo"]
     as BSTableBooking.Models.Session;
-    var tablelocation = ViewData["TableLocation"] as BSTableBooking.Models.TableArea;
     var availtable = ViewData["available"] as BSTableBooking.Models.AvailTables;
 
 }
@@ -16,7 +15,7 @@
 <div class="row g-3">
     <div class="col">
             <form asp-action="BookingEdit">
-            <input asp-for="SessionID" value=@session.SessionID hidden />
+          <input asp-for="SessionID" value=@Model.SessionID hidden />
 
 
             <div class="row justify-content-evenly">
@@ -53,6 +52,10 @@
                 </div>
             </div>
 
+        </form>
+
+            <form asp-action="BookingEdit">
+                <input asp-for="BookingID" value=@Model.BookingID hidden />
 
                 <div class="row justify-content-evenly">
                 <div class="form-group col-md-4">

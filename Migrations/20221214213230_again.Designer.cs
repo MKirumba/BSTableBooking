@@ -4,6 +4,7 @@ using BSTableBooking.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    partial class BSTableBookingAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221214213230_again")]
+    partial class again
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace BSTableBooking.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("AvailTablesBooking", b =>
-                {
-                    b.Property<int>("BookingID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SessionID")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookingID", "SessionID");
-
-                    b.HasIndex("SessionID");
-
-                    b.ToTable("AvailTablesBooking");
-                });
 
             modelBuilder.Entity("BSTableBooking.Data.ApplicationUser", b =>
                 {
@@ -163,6 +150,10 @@ namespace BSTableBooking.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BookingID");
+
+                    b.HasIndex("SessionID")
+                        .IsUnique()
+                        .HasFilter("[SessionID] IS NOT NULL");
 
                     b.ToTable("Booking");
                 });
@@ -359,21 +350,6 @@ namespace BSTableBooking.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AvailTablesBooking", b =>
-                {
-                    b.HasOne("BSTableBooking.Models.Booking", null)
-                        .WithMany()
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BSTableBooking.Models.AvailTables", null)
-                        .WithMany()
-                        .HasForeignKey("SessionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BSTableBooking.Models.AvailTables", b =>
                 {
                     b.HasOne("BSTableBooking.Models.Session", "AvailSession")
@@ -383,6 +359,15 @@ namespace BSTableBooking.Migrations
                         .IsRequired();
 
                     b.Navigation("AvailSession");
+                });
+
+            modelBuilder.Entity("BSTableBooking.Models.Booking", b =>
+                {
+                    b.HasOne("BSTableBooking.Models.AvailTables", "Session")
+                        .WithOne("Booking")
+                        .HasForeignKey("BSTableBooking.Models.Booking", "SessionID");
+
+                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("BSTableBooking.Models.Session", b =>
@@ -442,6 +427,12 @@ namespace BSTableBooking.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BSTableBooking.Models.AvailTables", b =>
+                {
+                    b.Navigation("Booking")
                         .IsRequired();
                 });
 

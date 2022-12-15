@@ -32,7 +32,7 @@ namespace BSTableBooking.Models
         public Session AvailSession { get; set; }
 
 
-        public Booking Booking { get; set; } 
+        public List<Booking> Booking { get; set; } 
        
     }
 }
