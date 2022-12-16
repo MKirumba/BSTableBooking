@@ -1,6 +1,6 @@
 ﻿
-using BSTableBooking.Models;
 using BSTableBooking.Data;
+using BSTableBooking.Models;
 
 namespace BSTableBooking.Services
 {

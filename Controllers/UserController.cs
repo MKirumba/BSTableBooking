@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BSTableBooking.Models;
 using BSTableBooking.Services;
-using BSTableBooking.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BSTableBooking.Controllers
 {
@@ -20,6 +19,11 @@ namespace BSTableBooking.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Creates default role for user for system access
+        /// </summary>
+        /// <param name="model">Resistration Object</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Registration(RegistrationModel model)
         {
@@ -39,12 +43,13 @@ namespace BSTableBooking.Controllers
         public async Task<IActionResult> CreateUser(RegistrationModel model)
         {
             if (!ModelState.IsValid) { return View(model); }
-            
+
             model.Role = "admin";
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(Registration));
         }
+
 
 
         public IActionResult Login()
@@ -83,7 +88,6 @@ namespace BSTableBooking.Controllers
             return View();
         }
 
-        // sdhfsdhdshfsdu udhffdui [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {

@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Newtonsoft.Json;
-using NuGet.Frameworks;
+﻿using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Policy;
 
 namespace BSTableBooking.Models
 {
     public class AvailTables
     {
-        
-      
+
+        /// <summary>
+        /// Availtable is Model for tracking tables / seats availabe for each sitting /session
+        /// </summary>
         [Required]
         [DisplayName("Available Seats")]
         public int Qty { get; set; }
@@ -26,7 +23,7 @@ namespace BSTableBooking.Models
         public Session AvailSession { get; set; }
 
 
-        public List<Booking> Booking { get; set; } 
-       
+        public List<Booking> Booking { get; set; }
+
     }
 }

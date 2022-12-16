@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BSTableBooking.Models;
+﻿using BSTableBooking.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using BSTableBooking.Services;
-using BSTableBooking.Data;
-using System.Linq;
 
 namespace BSTableBooking.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        
+
 
 
         public HomeController(ILogger<HomeController> logger)
@@ -22,7 +19,7 @@ namespace BSTableBooking.Controllers
 
         public IActionResult Index()
         {
-            
+
             return View();
         }
 

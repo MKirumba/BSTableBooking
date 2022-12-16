@@ -7,33 +7,33 @@
         <div class="row pb-2">
             <h2 class="text-primary">Create User</h2>
         </div>
-        <div class="mb-2">
+        <div class="mb-2 col-md-4">
             @* <div asp-validation-summary="All" class="text-danger"></div>*@
             <label>First Name</label>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-2 col-md-4">
             <label>Last Name</label>
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-2 col-md-4">
             <label>User Name</label>
             <input asp-for="UserName" class="form-control" />
             <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-2 col-md-4">
             <label>Email</label>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-2 col-md-4">
             <label>Password</label>
             <input type="password" asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-2 col-md-4">
             <label>Confirm Password</label>
             <input type="password" asp-for="PasswordConfirm" class="form-control" />
             <span asp-validation-for="PasswordConfirm" class="text-danger"></span>

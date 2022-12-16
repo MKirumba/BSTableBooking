@@ -1,9 +1,8 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
 using BSTableBooking.Data;
 using BSTableBooking.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

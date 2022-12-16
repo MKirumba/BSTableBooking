@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using BSTableBooking.Data;
+﻿using BSTableBooking.Data;
 using BSTableBooking.Models;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace BSTableBooking.Services
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;

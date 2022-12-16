@@ -1,11 +1,11 @@
-﻿using BSTableBooking.Models;
-using BSTableBooking.Data;
+﻿using BSTableBooking.Data;
+using BSTableBooking.Models;
 
 namespace BSTableBooking.Services
 {
-    public class SessionService: ISessionServices
+    public class SessionService : ISessionServices
     {
-        
+
         BSTableBookingAppDbContext Db;
         public SessionService(BSTableBookingAppDbContext _Db)
         {
@@ -17,9 +17,9 @@ namespace BSTableBooking.Services
         }
         public void CreateSession(Session P)
         {
-          
-                Db.Session.Add(P);
-                Db.SaveChanges();
+
+            Db.Session.Add(P);
+            Db.SaveChanges();
         }
     }
 }

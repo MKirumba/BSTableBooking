@@ -2,7 +2,7 @@
 namespace BSTableBooking.Services
 
 {
-    public class FileService:IFileService
+    public class FileService : IFileService
     {
         private readonly IWebHostEnvironment environment;
         public FileService(IWebHostEnvironment env)

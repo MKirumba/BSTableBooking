@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using BSTableBooking.Data;
+﻿using BSTableBooking.Data;
 using BSTableBooking.Models;
 using BSTableBooking.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BSTableBooking.Controllers
 {
@@ -27,13 +25,13 @@ namespace BSTableBooking.Controllers
             IFservice = _IFservice;
         }
 
-
+        [Authorize]
         public IActionResult Index()
         {
 
             return View(IPservices.GetAllSessions());
         }
-
+        [Authorize]
         public IActionResult SessionList()
         {
             return View(IPservices.GetAllSessions());
@@ -126,7 +124,6 @@ namespace BSTableBooking.Controllers
 
             return RedirectToAction("Index");
 
-
         }
 
 
@@ -177,10 +174,10 @@ namespace BSTableBooking.Controllers
             DB.TableArea.Update(tableloc);
 
             TempData["success"] = "Session Updated Successfully";
-         
+
 
             var availtable = DB.AvailTables.Find(Pobj.SessionID);
-                
+
             availtable.SessionID = Pobj.SessionID;
             availtable.Qty = Pobj.Qty;
             DB.AvailTables.Update(availtable);
@@ -191,7 +188,7 @@ namespace BSTableBooking.Controllers
         }
 
 
-            [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -216,7 +213,7 @@ namespace BSTableBooking.Controllers
         {
 
             Session Session = DB.Session.FirstOrDefault(s => s.SessionID == Id);
-            if (Session !=null)
+            if (Session != null)
             {
                 DB.Remove(Session);
                 DB.SaveChanges();
@@ -226,7 +223,7 @@ namespace BSTableBooking.Controllers
             return View();
 
         }
-        
+
     }
 }
 

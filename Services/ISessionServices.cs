@@ -1,5 +1,4 @@
 ﻿using BSTableBooking.Models;
-using System.Security.Cryptography;
 
 namespace BSTableBooking.Services
 {
@@ -7,6 +6,6 @@ namespace BSTableBooking.Services
     {
         public IEnumerable<Session> GetAllSessions();
         public void CreateSession(Session P);
-        
+
     }
 }

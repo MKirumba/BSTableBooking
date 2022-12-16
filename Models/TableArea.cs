@@ -5,6 +5,9 @@ namespace BSTableBooking.Models
 {
     public class TableArea
     {
+        /// <summary>
+        /// Table information
+        /// </summary>
         [Key]
         public int TableAreaID { get; set; }
         [Required]

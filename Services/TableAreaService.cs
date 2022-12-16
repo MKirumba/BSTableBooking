@@ -57,7 +57,7 @@ namespace BSTableBooking.Services
         {
             try
             {
-                
+
                 Dbx.TableArea.Update(model);
                 Dbx.SaveChanges();
                 return true;
@@ -68,6 +68,6 @@ namespace BSTableBooking.Services
             }
         }
 
-       
+
     }
 }

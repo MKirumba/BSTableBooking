@@ -1,5 +1,4 @@
 ﻿using BSTableBooking.Models;
-using System.Security.Cryptography;
 
 namespace BSTableBooking.Services
 {

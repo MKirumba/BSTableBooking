@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +8,9 @@ namespace BSTableBooking.Models
 {
     public class Session
     {
+        /// <summary>
+        /// Model class for available Sessions / Seatings 
+        /// /// </summary>
         [Key]
         public int SessionID { get; set; }
         [Required]
@@ -37,7 +39,7 @@ namespace BSTableBooking.Models
         public int TableAreas { get; set; }
         [NotMapped]
         public virtual IEnumerable<SelectListItem>? TableAreaList { get; set; }
-        
+
         [NotMapped]
         public string? TableAreaNames { get; set; }
         [NotMapped]

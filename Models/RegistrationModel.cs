@@ -4,7 +4,9 @@ namespace BSTableBooking.Models
 {
     public class RegistrationModel
     {
-
+        /// <summary>
+        /// Model for Registration of New Member Note: Role is equal to user
+        /// </summary>
         [Required]
         public string FirstName { get; set; }
         [Required]
