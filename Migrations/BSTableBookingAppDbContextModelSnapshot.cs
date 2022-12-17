@@ -134,10 +134,6 @@ namespace BSTableBooking.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("BookingDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("BookingDuration")
                         .HasColumnType("int");
 
@@ -154,6 +150,13 @@ namespace BSTableBooking.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BookingStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerIdentity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qty")

@@ -18,6 +18,17 @@
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
+            <div class="mb-2 col-md-2">
+            <div class="form-group">
+                <label asp-for="Role" class="form-label mt-4">Role</label>
+                <select class="form-select" asp-for="Role">
+                    <option>Staff</option>
+                    <option>Manager</option>
+                    <option>user</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+        </div>
         <div class="mb-2 col-md-4">
             <label>User Name</label>
             <input asp-for="UserName" class="form-control" />

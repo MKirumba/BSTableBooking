@@ -1,0 +1,92 @@
+﻿@model IEnumerable<BSTableBooking.Models.Booking>
+
+
+<div class="container p-3">
+    <div>
+        <h2 class="text-primary">Bookings List </h2>
+    </div>
+
+    <br />
+        <div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CustomerName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Qty)
+                    </th>
+                    <th>
+                        @*  @Html.DisplayNameFor(model => model.Session.BookingSession)*@
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingStartTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingEndTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingDuration)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingSource)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingNotes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BookingStatus)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Qty)
+                        </td>
+                        <td>
+                            @*   @Html.DisplayFor(modelItem => item.Session.BookingSession)*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingStartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingEndTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingDuration)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingSource)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingNotes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BookingStatus)
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+
+
+                            

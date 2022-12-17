@@ -4,13 +4,13 @@
 
 namespace BSTableBooking.Migrations
 {
-    public partial class imagesadded : Migration
+    public partial class custombooking : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "Session",
+                name: "CustomerIdentity",
+                table: "Booking",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -18,8 +18,8 @@ namespace BSTableBooking.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Image",
-                table: "Session");
+                name: "CustomerIdentity",
+                table: "Booking");
         }
     }
 }

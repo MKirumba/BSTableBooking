@@ -1,4 +1,5 @@
 ﻿using BSTableBooking.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BSTableBooking.Services
 {
@@ -10,5 +11,7 @@ namespace BSTableBooking.Services
         public void DeleteBooking(Booking P);
 
         public IQueryable<Booking> List();
+
+        public IEnumerable<Booking> GetAllBookings(string search);
     }
 }

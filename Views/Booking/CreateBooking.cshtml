@@ -1,12 +1,12 @@
 ﻿@model Booking;
 
 @{
-    
+
     var session = ViewData["SessionInfo"]
     as BSTableBooking.Models.Session;
     var tablelocation = ViewData["TableLocation"] as BSTableBooking.Models.TableArea;
     var availtable = ViewData["available"] as BSTableBooking.Models.AvailTables;
-
+    string user = User.Identity.Name;
 }
 <h1>Bean Scene</h1>
 
@@ -42,29 +42,25 @@
                     <label asp-for=@availtable.Qty class="control-label"></label>
                     <input asp-for=@availtable.Qty type="text" readonly class="form-control bg-light" />
                 </div>
-            
-   
-      
+
                      <div class="form-group col-md-4">
                     <label asp-for=@session.BookingSession class="control-label"></label>
                     <input asp-for=@session.BookingSession readonly class="form-control bg-light" />
                 </div>
             </div>
 
-       
-
             <div class="row justify-content-evenly">
                 <div class="form-group col-md-4">
    
-                        <label asp-for="BookingDescription" class="control-label"></label>
-                        <input asp-for="BookingDescription" inputtype="numeric" class="form-control" />
-                        <span asp-validation-for="BookingDescription" class="text-danger"></span>
+                        <label asp-for="CustomerName" class="control-label"></label>
+                        <input asp-for="CustomerName" value="@user" class="form-control" />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
                     </div>
                       
 
                     <div class="form-group col-md-4">
                         <label asp-for="BookingDate" class="control-label"></label>
-                    <input asp-for="BookingDate"  inputtype="numeric" class="form-control" />
+                    <input asp-for="BookingDate" class="form-control" />
                         <span asp-validation-for="BookingDate" class="text-danger"></span>
                     </div>
                 </div>
@@ -82,7 +78,7 @@
                     <div class="form-group col-md-4">
                         <div class="form-group">
                             <label asp-for="BookingDuration"  class="form-label mt-4">Booking Duration</label>
-                        <select class="form-select" type="time" id="durat" asp-for="BookingDuration">
+                        <select class="form-select"  asp-for="BookingDuration">
                                 <option>30</option>
                                 <option>45</option>
                                 <option>60</option>
@@ -99,13 +95,12 @@
                 <div class="row justify-content-evenly">
                     <div class="form-group col-md-4">
                         <label asp-for="BookingStartTime"  class="control-label"></label>
-                        <input asp-for="BookingStartTime" id="strt" oninput="endtime.Value= (durat + strt)" class="form-control" />
-
+                        <input asp-for="BookingStartTime" class="form-control" />
                         <span asp-validation-for="BookingStartTime" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-4">
                         <label asp-for="BookingEndTime" class="control-label"></label>
-                        <input asp-for="BookingEndTime" name="endtime" class="form-control" />
+                        <input asp-for="BookingEndTime" class="form-control" />
                         <span asp-validation-for="BookingEndTime" class="text-danger"></span>
                     </div>
                 </div>
@@ -122,19 +117,15 @@
                         <span asp-validation-for="BookingSource" class="text-danger"></span>
                     </div>
                     </div>
-                   
-                  
-               
-
-
+   
                     @*Only for Admin and Staff View*@
-            @if (User.IsInRole("admin") || User.IsInRole("staff"))
+            @if (User.IsInRole("admin") || User.IsInRole("Staff"))
             {
 
                 <div class="row justify-content-evenly">
                     <div class="form-group col-md-4">
                         <div class="form-group">
-                            <label asp-for="BookingStatus" class="form-label mt-4">Booking Status</label>
+                            <label asp-for="BookingStatus" value="Pending" class="form-label mt-4">Booking Status</label>
                             <select class="form-select" asp-for="BookingStatus">
                                 <option>Pending</option>
                                 <option>Confirmed</option>
@@ -154,14 +145,9 @@
         <div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a asp-controller="Session" asp-action="SessionList" class="btn btn-primary">Back To List</a>
-    
-
             </div>
-            
-           
 
 </form>
-
 
 @section Scripts{
     @{

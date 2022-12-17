@@ -2,8 +2,10 @@
 using BSTableBooking.Models;
 using BSTableBooking.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
+using System.Linq;
 
 namespace BSTableBooking.Controllers
 {
@@ -97,7 +99,11 @@ namespace BSTableBooking.Controllers
                 DB.AvailTables.Update(sessionexists);
                 DB.SaveChanges();
             }
-
+            if (User.IsInRole("user"))
+            {
+                Pobj.CustomerIdentity = User.Identity.Name;
+            }
+            Pobj.BookingStatus = "Pending";
             /// Create Booking in database
             using (var transaction = DB.Database.BeginTransaction())
             {
@@ -130,7 +136,7 @@ namespace BSTableBooking.Controllers
         /// </summary>
         /// <param name="id">BookingID</param>
         /// <returns></returns>
-        [Authorize(Roles = "admin,staff")]
+        [Authorize(Roles = "admin,Staff")]
         public IActionResult BookingEdit(int? id)
         {
             if (id == null || id == 0)
@@ -164,7 +170,7 @@ namespace BSTableBooking.Controllers
         /// <param name="Pobj">Booking Object</param>
         /// <returns></returns>
 
-        [Authorize(Roles = "admin,staff")]
+        [Authorize(Roles = "admin,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -173,11 +179,12 @@ namespace BSTableBooking.Controllers
             // Get booking information from database
             var booking = DB.Booking.Find(Pobj.BookingID);
             Pobj.SessionID = booking.SessionID;
-
+            Pobj.CustomerIdentity = booking.CustomerIdentity;
 
             /// Get session information
             var sessionexists = DB.AvailTables.Find(Pobj.SessionID);
             Pobj.SessionID = sessionexists.SessionID;
+
 
             /// Check for session information///
             
@@ -301,8 +308,25 @@ namespace BSTableBooking.Controllers
                 TempData["success"] = "Booking Deleted Successfully";
                 return RedirectToAction("BookingList");
             }
-            return View();
+            return View(); 
         }
+        /// <summary>
+        /// Fiter for bookins based on Login Identity
+        /// </summary>
+        /// <param name="search">Identity string</param>
+        /// <returns></returns>
+        public IActionResult BookingCustom(string search)
+
+        {
+            search = User.Identity.Name;
+
+            var customer = IBservice.GetAllBookings(search);
+
+            return View(customer);
+
+        }
+
+
 
         // checks of booking exists
         private bool BookingExists(int id)

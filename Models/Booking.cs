@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,21 +13,18 @@ namespace BSTableBooking.Models
         [Key]
         public int BookingID { get; set; }
 
-
+        [DataType(DataType.Date)]
         public DateTime BookingDate { get; set; } = DateTime.Now;
 
         [DisplayName("Customer Name")]
-        public string BookingDescription { get; set; }
+        public string CustomerName { get; set; }
         [Required]
         [DisplayName("Number of Guests")]
         public int Qty { get; set; }
 
-
         public int? SessionID { get; set; }
 
         public List<AvailTables> Session { get; set; }
-
-
 
         [DisplayName("Start Time")]
         public DateTime? BookingStartTime { get; set; } = DateTime.Now;
@@ -42,6 +40,9 @@ namespace BSTableBooking.Models
         public string? BookingNotes { get; set; }
         [DisplayName("Booking Status")]
         public string? BookingStatus { get; set; }
+
+        public string? CustomerIdentity { get; set; }
+
 
         [NotMapped]
         public string? BookingTableLocation { get; set; }

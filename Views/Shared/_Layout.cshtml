@@ -23,11 +23,19 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-
+                        @if (!string.IsNullOrEmpty(userName)){
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Session" asp-action="SessionList">Make a Booking</a>
                         </li>
-                      
+                        }
+
+                        @if (User.IsInRole("user"))
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="BookingCustom">Your Bookings</a>
+                        </li>
+                        }
+                     
                         @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
@@ -35,16 +43,15 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Session" asp-action="Index">Session Settings</a>
-                </li>
-            }
-                       
-                        @if (User.IsInRole("admin") || (User.IsInRole("staff")))
-            {
-            <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="BookingList">Booking List</a>
-             </li>
-            }
-        
+                            </li>
+                        }   
+                        @if (User.IsInRole("admin") || User.IsInRole("Staff"))
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="BookingList">Booking List</a>
+                             </li>
+                        }
+                      
             @if (string.IsNullOrEmpty(userName))
             {
                 <li class="nav-item">
@@ -58,18 +65,14 @@
      
                 @if (!string.IsNullOrEmpty(userName))
                 {
+
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                     </li>
 
                 }
             </ul>
-
-           
-@*            <form class="d-flex">
-            <input class="form-control me-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>*@
+       
             </div>
            </div>
        </nav>

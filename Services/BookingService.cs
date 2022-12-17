@@ -1,6 +1,8 @@
 ﻿
 using BSTableBooking.Data;
 using BSTableBooking.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace BSTableBooking.Services
 {
@@ -16,6 +18,23 @@ namespace BSTableBooking.Services
         {
             return (Db.Booking.Select(u => u).ToList());
         }
+
+        public IEnumerable<Booking> GetAllBookings(string search)
+        {
+
+            var customer = from m in Db.Booking
+                           select m;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                customer = customer.Where(s => s.CustomerIdentity.Contains(search));
+            }
+
+            return (customer);
+        }
+
+
+
         public void CreateBooking(Booking P)
         {
 

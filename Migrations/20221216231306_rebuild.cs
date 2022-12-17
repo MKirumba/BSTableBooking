@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace BSTableBooking.Migrations
 {
-    public partial class init : Migration
+    public partial class rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +48,28 @@ namespace BSTableBooking.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Booking",
+                columns: table => new
+                {
+                    BookingID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Qty = table.Column<int>(type: "int", nullable: false),
+                    SessionID = table.Column<int>(type: "int", nullable: true),
+                    BookingStartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    BookingEndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    BookingDuration = table.Column<int>(type: "int", nullable: true),
+                    BookingSource = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Booking", x => x.BookingID);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,7 +204,8 @@ namespace BSTableBooking.Migrations
                     TableAreaID = table.Column<int>(type: "int", nullable: true),
                     SessionEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BookingSession = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TableLocation = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TableLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,30 +236,27 @@ namespace BSTableBooking.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Booking",
+                name: "AvailTablesBooking",
                 columns: table => new
                 {
-                    BookingID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BookingDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qty = table.Column<int>(type: "int", nullable: false),
-                    SessionID = table.Column<int>(type: "int", nullable: true),
-                    BookingStartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    BookingEndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    BookingDuration = table.Column<int>(type: "int", nullable: true),
-                    BookingSource = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BookingNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BookingStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    BookingID = table.Column<int>(type: "int", nullable: false),
+                    SessionID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Booking", x => x.BookingID);
+                    table.PrimaryKey("PK_AvailTablesBooking", x => new { x.BookingID, x.SessionID });
                     table.ForeignKey(
-                        name: "FK_Booking_AvailTables_SessionID",
+                        name: "FK_AvailTablesBooking_AvailTables_SessionID",
                         column: x => x.SessionID,
                         principalTable: "AvailTables",
-                        principalColumn: "SessionID");
+                        principalColumn: "SessionID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AvailTablesBooking_Booking_BookingID",
+                        column: x => x.BookingID,
+                        principalTable: "Booking",
+                        principalColumn: "BookingID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -278,11 +299,9 @@ namespace BSTableBooking.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_SessionID",
-                table: "Booking",
-                column: "SessionID",
-                unique: true,
-                filter: "[SessionID] IS NOT NULL");
+                name: "IX_AvailTablesBooking_SessionID",
+                table: "AvailTablesBooking",
+                column: "SessionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Session_TableAreaID",
@@ -308,7 +327,7 @@ namespace BSTableBooking.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Booking");
+                name: "AvailTablesBooking");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -318,6 +337,9 @@ namespace BSTableBooking.Migrations
 
             migrationBuilder.DropTable(
                 name: "AvailTables");
+
+            migrationBuilder.DropTable(
+                name: "Booking");
 
             migrationBuilder.DropTable(
                 name: "Session");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSTableBooking.Migrations
 {
     [DbContext(typeof(BSTableBookingAppDbContext))]
-    [Migration("20221214213545_again2")]
-    partial class again2
+    [Migration("20221217024206_custombooking")]
+    partial class custombooking
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,10 +136,6 @@ namespace BSTableBooking.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("BookingDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("BookingDuration")
                         .HasColumnType("int");
 
@@ -156,6 +152,13 @@ namespace BSTableBooking.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BookingStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerIdentity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qty")
@@ -178,6 +181,9 @@ namespace BSTableBooking.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SessionID"), 1L, 1);
 
                     b.Property<string>("BookingSession")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qty")

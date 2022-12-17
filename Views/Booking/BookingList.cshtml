@@ -15,7 +15,7 @@
                 @Html.DisplayNameFor(model => model.BookingDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingDescription)
+                @Html.DisplayNameFor(model => model.CustomerName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Qty)
@@ -51,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.BookingDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BookingDescription)
+                @Html.DisplayFor(modelItem => item.CustomerName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Qty)
@@ -80,8 +80,10 @@
             <td>
 
                         <a asp-action="BookingEdit" class="btn btn-outline-primary mx-3" asp-route-id="@item.BookingID">Edit</a>
+
+                        @if (User.IsInRole("admin")) {
                         <a asp-action="BookingDelete" class="btn btn-outline-primary mx-3" asp-route-id="@item.BookingID">Delete</a>
-                           
+                        }
             </td>
         </tr>
 }

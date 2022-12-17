@@ -1,5 +1,6 @@
 ﻿using BSTableBooking.Models;
 using BSTableBooking.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BSTableBooking.Controllers
@@ -44,7 +45,11 @@ namespace BSTableBooking.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
 
-            model.Role = "admin";
+            if (model.Role == "Manager")
+            {
+                model.Role = "admin";
+            }
+
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(Registration));
