@@ -95,7 +95,7 @@ namespace BSTableBooking.Controllers
 
 
                 }
-                // Updating Session quantity
+                // Updating Session quantity 
                 DB.AvailTables.Update(sessionexists);
                 DB.SaveChanges();
             }
